@@ -1,0 +1,284 @@
+/* ==========================================================================
+   ENTERPRISE ISCM - WAREHOUSE 2D/3D VISUALIZER & BIN MATRIX
+   ========================================================================== */
+
+.warehouse-visualizer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.warehouse-header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+
+.warehouse-meta-info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.meta-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.meta-stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/* Legend */
+.warehouse-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend-swatch.empty { background: rgba(255, 255, 255, 0.1); border: 1px dashed rgba(255, 255, 255, 0.3); }
+.legend-swatch.normal { background: var(--color-success); }
+.legend-swatch.high { background: var(--color-warning); }
+.legend-swatch.full { background: var(--color-danger); }
+.legend-swatch.quarantine { background: var(--color-purple); }
+
+/* Rack & Bin Grid */
+.racks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.rack-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.rack-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rack-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shelves-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shelf-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shelf-label {
+  width: 70px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.bins-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  flex: 1;
+}
+
+.bin-cell {
+  background: var(--bg-bin-cell);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  min-height: 80px;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.bin-cell:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-500);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px var(--primary-glow);
+}
+
+.bin-cell.empty {
+  border: 1px dashed var(--border-medium);
+  background: var(--bg-bin-empty);
+}
+
+.bin-cell.normal {
+  border-left: 3px solid var(--color-success);
+}
+
+.bin-cell.high {
+  border-left: 3px solid var(--color-warning);
+}
+
+.bin-cell.full {
+  border-left: 3px solid var(--color-danger);
+}
+
+.bin-cell.quarantine {
+  border-left: 3px solid var(--color-purple);
+}
+
+.bin-code {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--primary-300);
+  margin-bottom: 4px;
+}
+
+.bin-sku {
+  font-size: 11px;
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bin-qty {
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}
+
+.bin-progress-bar {
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.bin-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+.bin-progress-fill.normal { background: var(--color-success); }
+.bin-progress-fill.high { background: var(--color-warning); }
+.bin-progress-fill.full { background: var(--color-danger); }
+.bin-progress-fill.quarantine { background: var(--color-purple); }
+
+/* Barcode Label Box */
+.barcode-preview-box {
+  background: #ffffff;
+  color: #000000;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  border: 2px solid #000000;
+  margin: 12px 0;
+}
+
+.barcode-lines {
+  height: 48px;
+  width: 220px;
+  background: repeating-linear-gradient(
+    90deg,
+    #000000 0px,
+    #000000 3px,
+    #ffffff 3px,
+    #ffffff 5px,
+    #000000 5px,
+    #000000 8px,
+    #ffffff 8px,
+    #ffffff 10px
+  );
+}
+
+/* Responsive adjustments for Warehouse Visualizer */
+@media (max-width: 768px) {
+  .warehouse-header-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+  }
+  .warehouse-meta-info {
+    gap: 14px;
+    justify-content: space-between;
+  }
+  .shelf-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .shelf-label {
+    width: 100%;
+  }
+  .bins-row {
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 8px;
+  }
+  .rack-section {
+    padding: 12px;
+  }
+}
+

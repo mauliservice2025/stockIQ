@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>StockIQ - Enterprise Inventory &amp; Supply Chain Management System</title>
+  
+  <!-- Immediate Zero-Flicker Theme Mode Initialization -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('STOCKIQ_THEME') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch(e) {}
+    })();
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css?v=1.8">
+  <link rel="stylesheet" href="css/components.css?v=2.2">
+  <link rel="stylesheet" href="css/layout.css?v=1.9">
+  <link rel="stylesheet" href="css/warehouse.css?v=1.8">
+
+  <!-- Immediate Resilient Sidebar & Multi-Module Toggle Script -->
+  <script>
+    window.toggleModuleGroup = function(el) {
+      try {
+        // If user is selecting text (e.g. copying master name), do not toggle accordion
+        var sel = (typeof window !== 'undefined' && window.getSelection) ? window.getSelection().toString() : '';
+        var isHeaderSelected = el && typeof window !== 'undefined' && window.getSelection && window.getSelection().anchorNode && el.contains(window.getSelection().anchorNode);
+        if (isHeaderSelected && sel && sel.trim().length > 0) return;
+
+        var group = el && el.closest ? el.closest('.module-group') : (typeof el === 'string' ? document.getElementById(el) : null);
+        if (!group) return;
+        if ((group.style && group.style.display === 'none') || (group.getAttribute && group.getAttribute('data-rbac-hidden') === 'true')) return;
+
+        var isAlreadyOpen = group.classList.contains('open');
+
+        // Accordion behavior: collapse all other module groups so only one can be expanded at a time
+        document.querySelectorAll('.module-group').forEach(function(otherGroup) {
+          otherGroup.classList.remove('open');
+        });
+
+        // Toggle clicked module group: expand if was closed, collapse if was already open
+        if (!isAlreadyOpen) {
+          group.classList.add('open');
+        }
+      } catch (err) {
+        console.error('toggleModuleGroup error:', err);
+      }
+    };
+
+    window.toggleSubModuleGroup = function(el, evt) {
+      if (evt) {
+        evt.stopPropagation();
+      }
+      try {
+        // If user is selecting text (e.g. copying master name), do not toggle sub-module
+        var sel = (typeof window !== 'undefined' && window.getSelection) ? window.getSelection().toString() : '';
+        var isSubHeaderSelected = el && typeof window !== 'undefined' && window.getSelection && window.getSelection().anchorNode && el.contains(window.getSelection().anchorNode);
+        if (isSubHeaderSelected && sel && sel.trim().length > 0) return;
+
+        var group = el && el.closest ? el.closest('.sub-module-group') : (typeof el === 'string' ? document.getElementById(el) : null);
+        if (!group) return;
+        if ((group.style && group.style.display === 'none') || (group.getAttribute && group.getAttribute('data-rbac-hidden') === 'true')) return;
+        group.classList.toggle('open');
+      } catch (err) {
+        console.error('toggleSubModuleGroup error:', err);
+      }
+    };
+
+    // Ensure selecting/highlighting text on masters, navigation items, and tabs does not accidentally trigger navigation
+    (function() {
+      var mouseDownX = 0, mouseDownY = 0;
+      var isDragSelecting = false;
+
+      document.addEventListener('mousedown', function(e) {
+        mouseDownX = e.clientX;
+        mouseDownY = e.clientY;
+      }, true);
+
+      document.addEventListener('mouseup', function(e) {
+        var dist = Math.hypot(e.clientX - mouseDownX, e.clientY - mouseDownY);
+        var sel = (typeof window !== 'undefined' && window.getSelection) ? window.getSelection().toString() : '';
+        isDragSelecting = (dist > 4 && sel.trim().length > 0);
+      }, true);
+
+      document.addEventListener('click', function(e) {
+        var sel = (typeof window !== 'undefined' && window.getSelection) ? window.getSelection().toString() : '';
+        var clickable = e.target.closest('a.nav-item, a.sub-nav-item, a.sub-sub-nav-item, .tab-btn, .module-header, .sub-module-header');
+        var isSelectionOnTarget = clickable && typeof window !== 'undefined' && window.getSelection && window.getSelection().anchorNode && (clickable.contains(window.getSelection().anchorNode) || clickable === window.getSelection().anchorNode);
+        if (clickable && isSelectionOnTarget && (isDragSelecting || (sel && sel.trim().length > 0))) {
+          e.preventDefault();
+          e.stopPropagation();
+          isDragSelecting = false;
+          return;
+        }
+        isDragSelecting = false;
+      }, true);
+    })();
+
+    window.toggleSidebarPin = function() {
+      if (window.App && typeof window.App.toggleSidebarPin === 'function') {
+        window.App.toggleSidebarPin();
+        return;
+      }
+      var sidebar = document.getElementById('app-sidebar');
+      if (!sidebar) return;
+      var isPinned = sidebar.classList.toggle('pinned');
+      sidebar.classList.toggle('collapsed', !isPinned);
+      localStorage.setItem('STOCKIQ_SIDEBAR_PINNED', isPinned ? 'true' : 'false');
+    };
+
+    window.toggleMobileSidebar = function() {
+      var sidebar = document.getElementById('app-sidebar');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if (!sidebar) return;
+      var isOpen = sidebar.classList.toggle('mobile-open');
+      if (backdrop) backdrop.classList.toggle('active', isOpen);
+      document.body.classList.toggle('sidebar-mobile-open', isOpen);
+    };
+
+    window.closeMobileSidebar = function() {
+      var sidebar = document.getElementById('app-sidebar');
+      var backdrop = document.getElementById('sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('mobile-open');
+      if (backdrop) backdrop.classList.remove('active');
+      document.body.classList.remove('sidebar-mobile-open');
+    };
+
+    // Auto-close mobile sidebar drawer upon selecting any navigation link, resize, or escape
+    document.addEventListener('DOMContentLoaded', function() {
+      var sidebar = document.getElementById('app-sidebar');
+      if (sidebar) {
+        sidebar.addEventListener('click', function(e) {
+          var navLink = e.target.closest('a.nav-item, a.sub-nav-item, a.sub-sub-nav-item');
+          if (navLink && window.innerWidth <= 1024) {
+            window.closeMobileSidebar();
+          }
+        });
+      }
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 1024) {
+          window.closeMobileSidebar();
+        }
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          window.closeMobileSidebar();
+        }
+      });
+    });
+
+    // Initialize sidebar pinned state on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      var isPinned = localStorage.getItem('STOCKIQ_SIDEBAR_PINNED') !== 'false';
+      var sidebar = document.getElementById('app-sidebar');
+      if (sidebar) {
+        if (isPinned) {
+          sidebar.classList.add('pinned');
+          sidebar.classList.remove('collapsed');
+        } else {
+          sidebar.classList.remove('pinned');
+          sidebar.classList.add('collapsed');
+        }
+      }
+    });
+
+    // Smooth wheel scrolling forwarder for entire sidebar
+    document.addEventListener('DOMContentLoaded', function() {
+      var sidebar = document.getElementById('app-sidebar');
+      var content = document.querySelector('.sidebar-content');
+      if (sidebar && content) {
+        sidebar.addEventListener('wheel', function(e) {
+          if (!content.contains(e.target) || e.target === sidebar) {
+            content.scrollTop += e.deltaY;
+            e.preventDefault();
+          }
+        }, { passive: false });
+      }
+    });
+
+    // Real-Time Sidebar Module & Sub-Module Search Filter
+    window.filterSidebarModules = function(query) {
+      try {
+        var q = (query || '').trim().toLowerCase();
+        var clearBtn = document.getElementById('sidebar-search-clear-btn');
+        var countBadge = document.getElementById('sidebar-search-count');
+        var sidebarContent = document.querySelector('.sidebar-content');
+        if (!sidebarContent) return;
+
+        if (clearBtn) {
+          if (q) {
+            clearBtn.classList.add('visible');
+          } else {
+            clearBtn.classList.remove('visible');
+          }
+        }
+
+        var standaloneNavItems = sidebarContent.querySelectorAll(':scope > a.nav-item');
+        var moduleGroups = sidebarContent.querySelectorAll('.module-group');
+        var emptyState = document.getElementById('sidebar-search-empty');
+
+        if (!q) {
+          if (window.App && typeof window.App.filterSidebarByPermissions === 'function') {
+            window.App.filterSidebarByPermissions();
+          } else {
+            standaloneNavItems.forEach(function(el) { el.style.display = ''; });
+            moduleGroups.forEach(function(group) {
+              group.style.display = '';
+              group.classList.remove('open');
+              var subItems = group.querySelectorAll('.sub-nav-item');
+              subItems.forEach(function(sub) { sub.style.display = ''; });
+              var subGroups = group.querySelectorAll('.sub-module-group');
+              subGroups.forEach(function(sg) { sg.style.display = ''; sg.classList.add('open'); });
+            });
+          }
+          if (countBadge) countBadge.style.display = 'none';
+          if (emptyState) emptyState.remove();
+          return;
+        }
+
+        var totalMatches = 0;
+
+        // Filter standalone links (e.g. Dashboard)
+        standaloneNavItems.forEach(function(el) {
+          if (el.getAttribute('data-rbac-hidden') === 'true') {
+            el.style.display = 'none';
+            return;
+          }
+          var text = el.textContent.toLowerCase();
+          if (text.indexOf(q) !== -1) {
+            el.style.display = '';
+            totalMatches++;
+          } else {
+            el.style.display = 'none';
+          }
+        });
+
+        // Filter module groups and their sub-items
+        moduleGroups.forEach(function(group) {
+          if (group.getAttribute('data-rbac-hidden') === 'true') {
+            group.style.display = 'none';
+            return;
+          }
+          var headerTitleEl = group.querySelector('.module-header-title');
+          var groupTitle = headerTitleEl ? headerTitleEl.textContent.toLowerCase() : '';
+          var groupMatches = groupTitle.indexOf(q) !== -1;
+
+          var subItems = group.querySelectorAll('.sub-nav-item');
+          var matchingSubCount = 0;
+
+          subItems.forEach(function(sub) {
+            if (sub.getAttribute('data-rbac-hidden') === 'true') {
+              sub.style.display = 'none';
+              return;
+            }
+            var subTitleEl = sub.querySelector('.sub-nav-title') || sub;
+            var subText = subTitleEl.textContent.toLowerCase();
+            var subKeywords = (sub.getAttribute('data-keywords') || '').toLowerCase();
+            if (groupMatches || subText.indexOf(q) !== -1 || (subKeywords && subKeywords.indexOf(q) !== -1)) {
+              sub.style.display = '';
+              matchingSubCount++;
+              totalMatches++;
+            } else {
+              sub.style.display = 'none';
+            }
+          });
+
+          // Also handle nested sub-module groups (.sub-module-group)
+          var subGroups = group.querySelectorAll('.sub-module-group');
+          subGroups.forEach(function(sg) {
+            var sgTitleEl = sg.querySelector('.sub-module-title');
+            var sgTitle = sgTitleEl ? sgTitleEl.textContent.toLowerCase() : '';
+            var sgMatches = groupMatches || (sgTitle.indexOf(q) !== -1);
+
+            var sgItems = sg.querySelectorAll('.sub-nav-item');
+            var matchingSgItems = 0;
+            sgItems.forEach(function(item) {
+              if (sgMatches && item.getAttribute('data-rbac-hidden') !== 'true') {
+                if (item.style.display === 'none') {
+                  item.style.display = '';
+                  matchingSubCount++;
+                  totalMatches++;
+                }
+              }
+              if (item.style.display !== 'none' && item.getAttribute('data-rbac-hidden') !== 'true') {
+                matchingSgItems++;
+              }
+            });
+
+            if (sgMatches || matchingSgItems > 0) {
+              sg.style.display = '';
+              sg.classList.add('open');
+            } else {
+              sg.style.display = 'none';
+            }
+          });
+
+          if (matchingSubCount > 0) {
+            group.style.display = '';
+            group.classList.add('open'); // Expand matching module
+          } else {
+            group.style.display = 'none';
+          }
+        });
+
+        if (countBadge) {
+          countBadge.style.display = 'flex';
+          countBadge.innerHTML = '<span>Matches: <strong>' + totalMatches + '</strong> found</span><a href="javascript:void(0)" onclick="var inp=document.getElementById(\'sidebar-module-search\'); if(inp){ inp.value=\'\'; window.filterSidebarModules(\'\'); inp.focus(); }" style="color: var(--primary-400); text-decoration: underline; cursor: pointer;">Clear</a>';
+        }
+
+        // Empty state when no matches found
+        if (totalMatches === 0) {
+          if (!emptyState) {
+            emptyState = document.createElement('div');
+            emptyState.id = 'sidebar-search-empty';
+            emptyState.className = 'sidebar-empty-search';
+            sidebarContent.appendChild(emptyState);
+          }
+          emptyState.innerHTML = '<span class="sidebar-empty-search-icon">🔎</span>No modules match &quot;<strong>' + q.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</strong>&quot;<br><button type="button" onclick="var inp=document.getElementById(\'sidebar-module-search\'); if(inp){ inp.value=\'\'; window.filterSidebarModules(\'\'); inp.focus(); }" style="margin-top: 10px; background: rgba(99,102,241,0.15); border: 1px solid var(--primary-500); color: var(--primary-300); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 600;">Reset Filter</button>';
+        } else if (emptyState) {
+          emptyState.remove();
+        }
+      } catch (err) {
+        console.error('filterSidebarModules error:', err);
+      }
+    };
+
+    window.toggleUserProfileMenu = function(e) {
+      if (e) e.stopPropagation();
+      if (window.App && typeof window.App.updateHeaderProfileInfo === 'function') {
+        window.App.updateHeaderProfileInfo();
+      }
+      var dropdown = document.getElementById('user-profile-dropdown');
+      var btn = document.getElementById('user-profile-trigger-btn');
+      if (!dropdown) return;
+      var isOpen = dropdown.classList.toggle('active');
+      if (btn) btn.classList.toggle('active', isOpen);
+    };
+
+    // Global outside-click dismiss for user profile dropdown
+    document.addEventListener('click', function(e) {
+      // Dismiss user profile flyout if clicked outside
+      var profileContainer = document.getElementById('user-profile-menu-container');
+      var profileDropdown = document.getElementById('user-profile-dropdown');
+      var profileBtn = document.getElementById('user-profile-trigger-btn');
+      if (profileContainer && !profileContainer.contains(e.target)) {
+        if (profileDropdown) profileDropdown.classList.remove('active');
+        if (profileBtn) profileBtn.classList.remove('active');
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- ==================================================================== -->
+    <!-- 1. SIDEBAR NAVIGATION -->
+    <!-- ==================================================================== -->
+    <aside class="sidebar collapsed" id="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo-icon">IQ</div>
+        <div class="brand-info">
+          <span class="brand-title">StockIQ</span>
+          <span class="brand-subtitle">Enterprise SCM</span>
+        </div>
+        <button type="button" class="sidebar-mobile-close-btn" id="sidebar-mobile-close-btn" onclick="window.closeMobileSidebar()" aria-label="Close navigation menu" title="Close navigation menu">✕</button>
+      </div>
+
+      <!-- Sidebar Search Tab & Filter -->
+      <div class="sidebar-search-container" id="sidebar-search-container">
+        <div class="sidebar-search-wrapper">
+          <span class="sidebar-search-icon">🔍</span>
+          <input type="text" id="sidebar-module-search" class="sidebar-search-input" placeholder="Search modules or sub-modules..." autocomplete="off" spellcheck="false" oninput="window.filterSidebarModules(this.value)" onkeydown="if(event.key==='Escape'){ this.value=''; window.filterSidebarModules(''); this.blur(); }">
+          <button type="button" id="sidebar-search-clear-btn" class="sidebar-search-clear" onclick="var inp=document.getElementById('sidebar-module-search'); if(inp){ inp.value=''; window.filterSidebarModules(''); inp.focus(); }" title="Clear search">✕</button>
+        </div>
+        <div id="sidebar-search-count" class="sidebar-search-count" style="display: none;"></div>
+      </div>
+
+      <!-- Navigation Content with Collapsible Module Groups -->
+      <nav class="sidebar-content">
+        <!-- Dashboard Standalone Link -->
+        <a href="#/dashboard" class="nav-item active" style="margin-bottom: 8px;">
+          <span class="nav-item-icon">📊</span>
+          <span>Operations Dashboard</span>
+        <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="dashboard" title="Pin Operations Dashboard to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+
+        <!-- Procurement Lifecycle Dropdown -->
+        <div class="module-group" id="group-procurement">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🛒</span>
+              <span class="module-header-title">Procurement</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu">
+            <a href="#/purchase-planning" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">MRP &amp; Planning</span>
+              <span class="nav-item-badge">Auto</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="purchase-planning" title="Pin MRP &amp; Planning to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/requisitions" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Requisitions (PR)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="requisitions" title="Pin Requisitions (PR) to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/orders" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Purchase Orders (PO)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="orders" title="Pin Purchase Orders (PO) to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/grn" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Goods Receipt (GRN)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="grn" title="Pin Goods Receipt (GRN) to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/suppliers" class="sub-nav-item nav-item" id="nav-item-suppliers">
+              <span class="sub-nav-title">Supplier &amp; Vendor Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="suppliers" title="Pin Supplier &amp; Vendor Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Quality & Warehousing Dropdown -->
+        <div class="module-group" id="group-quality">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🔬</span>
+              <span class="module-header-title">Quality &amp; Storage</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu">
+            <a href="#/quality" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Quality Inspection (QA)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="quality" title="Pin Quality Inspection to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/putaway" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Directed Putaway</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="putaway" title="Pin Directed Putaway to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/warehouse-map" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Warehouse Visualizer</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="warehouse-map" title="Pin Warehouse Visualizer to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Inventory & Logistics Dropdown -->
+        <div class="module-group" id="group-inventory">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🏬</span>
+              <span class="module-header-title">Inventory &amp; Logistics</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu">
+            <a href="#/inventory" class="sub-nav-item nav-item" id="nav-item-inventory">
+              <span class="sub-nav-title">Stock Balances</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="inventory" title="Pin Stock Balances to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/opening-balance" class="sub-nav-item nav-item" id="nav-item-opening-balance">
+              <span class="sub-nav-title">Opening Balance</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="opening-balance" title="Pin Opening Balance to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/transfers" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Stock Transfer</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="transfers" title="Pin Stock Transfer to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/receive-transfers" class="sub-nav-item nav-item" id="nav-item-receive-transfers">
+              <span class="sub-nav-title">Receive Stock Transfer</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="receive-transfers" title="Pin Receive Stock Transfer to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Manufacturing Dropdown -->
+        <div class="module-group" id="group-production">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">⚙️</span>
+              <span class="module-header-title">Production &amp; BOM</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu">
+            <a href="#/production" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Work Orders &amp; BOM</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="production" title="Pin Work Orders &amp; BOM to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Outbound Sales & Dispatch Dropdown -->
+        <div class="module-group" id="group-dispatch">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">📤</span>
+              <span class="module-header-title">Outbound Logistics</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu">
+            <a href="#/dispatch" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Dispatch &amp; Gate Pass</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="dispatch" title="Pin Dispatch &amp; Gate Pass to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Governance, Audits & Analytics Dropdown -->
+        <div class="module-group" id="group-control">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🛡️</span>
+              <span class="module-header-title">Audits &amp; Reports</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu">
+            <a href="#/returns" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Reverse Logistics (RMA)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="returns" title="Pin Reverse Logistics (RMA) to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/adjustments" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Cycle Counts &amp; Adjust</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="adjustments" title="Pin Cycle Counts &amp; Adjust to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/reports" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Executive MIS Reports</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="reports" title="Pin Executive MIS Reports to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/masters" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Master Data Config</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="masters" title="Pin Master Data Config to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/audit" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Audit Trail Log</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="audit" title="Pin Audit Trail Log to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Billing & Workshop Suite (Job Card -> Estimate -> Draft Bill -> Final Bill Flow) -->
+        <div class="module-group" id="group-billing">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🧾</span>
+              <span class="module-header-title">Billing &amp; Job Card</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu" id="subgroup-billing">
+            <a href="#/billing-dashboard" class="sub-nav-item nav-item" id="nav-item-billing-dashboard">
+              <span class="sub-nav-title">Billing Dashboard</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="billing-dashboard" title="Pin Billing Dashboard to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/job-cards" class="sub-nav-item nav-item" id="nav-item-job-cards" onclick="if(window.BillingModule){window.BillingModule.activeTab='JOB_CARDS'; window.BillingModule.jobCardSubView='REGISTER';} if(window.location.hash==='#/job-cards'){if(window.App){window.App.handleRoute();}else if(window.BillingModule){window.BillingModule.refresh();}}">
+              <span class="sub-nav-title">Job Card</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="job-cards" title="Pin Job Card to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/billing-estimates" class="sub-nav-item nav-item" id="nav-item-billing-estimates">
+              <span class="sub-nav-title">Estimate</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="billing-estimates" title="Pin Estimate to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/customer-billing" class="sub-nav-item nav-item" id="nav-item-customer-billing">
+              <span class="sub-nav-title">Billing</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="customer-billing" title="Pin Billing to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/draft-bills" class="sub-nav-item nav-item" id="nav-item-draft-bills">
+              <span class="sub-nav-title">Draft Bill</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="draft-bills" title="Pin Draft Bill to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/final-bills" class="sub-nav-item nav-item" id="nav-item-final-bills">
+              <span class="sub-nav-title">Bill List</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="final-bills" title="Pin Bill List to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/vehicle-delivery" class="sub-nav-item nav-item" id="nav-item-vehicle-delivery">
+              <span class="sub-nav-title">Vehicle Delivery</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="vehicle-delivery" title="Pin Vehicle Delivery to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Customer Relationship Management (CRM) - Service Reminders -->
+        <div class="module-group" id="group-crm">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">💬</span>
+              <span class="module-header-title">Customer Relationship (CRM)</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu" id="subgroup-crm">
+            <a href="#/reminder-dashboard" class="sub-nav-item nav-item" id="nav-item-reminder-dashboard">
+              <span class="sub-nav-title">Service Reminder Dashboard</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="reminder-dashboard" title="Pin Service Reminder Dashboard to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/reminder-configuration" class="sub-nav-item nav-item" id="nav-item-reminder-configuration">
+              <span class="sub-nav-title">Reminder Configuration</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="reminder-configuration" title="Pin Reminder Configuration to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/reminder-processing" class="sub-nav-item nav-item" id="nav-item-reminder-processing">
+              <span class="sub-nav-title">Reminder Processing</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="reminder-processing" title="Pin Reminder Processing to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/reminder-history" class="sub-nav-item nav-item" id="nav-item-reminder-history">
+              <span class="sub-nav-title">Reminder History</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="reminder-history" title="Pin Reminder History to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/reminder-reports" class="sub-nav-item nav-item" id="nav-item-reminder-reports">
+              <span class="sub-nav-title">Reminder Reports</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="reminder-reports" title="Pin Reminder Reports to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/message-templates" class="sub-nav-item nav-item" id="nav-item-message-templates">
+              <span class="sub-nav-title">Message Template Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="message-templates" title="Pin Message Template Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Item Master Setup Suite -->
+        <div class="module-group" id="group-item-master-setup">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">📦</span>
+              <span class="module-header-title">Item Master Setup</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu" id="subgroup-item-setup">
+            <a href="#/item-dashboard" class="sub-nav-item nav-item" id="nav-item-item-dashboard">
+              <span class="sub-nav-title">Item Master Dashboard</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="item-dashboard" title="Pin Item Master Dashboard to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/item-master" class="sub-nav-item nav-item" id="nav-item-item-master">
+              <span class="sub-nav-title">Item Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="item-master" title="Pin Item Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/service-master" class="sub-nav-item nav-item" id="nav-item-service-master">
+              <span class="sub-nav-title">Service Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="service-master" title="Pin Service Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/item-categories" class="sub-nav-item nav-item" id="nav-item-item-categories" title="Item Category &amp; Sub-Category Master">
+              <span class="sub-nav-title">Item Category &amp; Sub-Category Master</span>
+              <span style="display:none">Item Category Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="item-categories" title="Pin Item Category &amp; Sub-Category to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <!-- Merged into Category Master; hidden backward compatibility link -->
+            <a href="#/item-subcategories" class="sub-nav-item nav-item" id="nav-item-item-subcategories" style="" title="Item Sub-Category Master">
+              <span class="sub-nav-title">Item Sub-Category Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="item-subcategories" title="Pin Item Sub-Category Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/item-brands" class="sub-nav-item nav-item" id="nav-item-item-brands">
+              <span class="sub-nav-title">Brand Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="item-brands" title="Pin Brand Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/item-manufacturers" class="sub-nav-item nav-item" id="nav-item-item-manufacturers">
+              <span class="sub-nav-title">Manufacturer Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="item-manufacturers" title="Pin Manufacturer Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/vehicle-compatibility" class="sub-nav-item nav-item" id="nav-item-vehicle-compatibility">
+              <span class="sub-nav-title">Vehicle Compatibility</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="vehicle-compatibility" title="Pin Vehicle Compatibility to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/uom-master" class="sub-nav-item nav-item" id="nav-item-uom-master">
+              <span class="sub-nav-title">UOM Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="uom-master" title="Pin UOM Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/hsn-master" class="sub-nav-item nav-item" id="nav-item-hsn-master">
+              <span class="sub-nav-title">HSN/SAC Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="hsn-master" title="Pin HSN/SAC Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/stock-counts" class="sub-nav-item nav-item" id="nav-item-stock-counts">
+              <span class="sub-nav-title">Physical Count &amp; Adjust</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="stock-counts" title="Pin Physical Count &amp; Adjust to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/warranty-scrap" class="sub-nav-item nav-item" id="nav-item-warranty-scrap">
+              <span class="sub-nav-title">Warranty &amp; Scrap Stores</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="warranty-scrap" title="Pin Warranty &amp; Scrap Stores to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/inventory-rules" class="sub-nav-item nav-item" id="nav-item-inventory-rules">
+              <span class="sub-nav-title">Inventory Rules &amp; Access</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="inventory-rules" title="Pin Inventory Rules &amp; Access to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/stock-ledger" class="sub-nav-item nav-item" id="nav-item-stock-ledger">
+              <span class="sub-nav-title">Stock Ledger &amp; Valuation</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="stock-ledger" title="Pin Stock Ledger &amp; Valuation to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Store Master Setup Suite (BRD Compliant) -->
+        <div class="module-group" id="group-store-inventory">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🏬</span>
+              <span class="module-header-title">Store Master Setup</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu" id="subgroup-store-setup">
+            <a href="#/store-master" class="sub-nav-item nav-item" id="nav-item-store-master">
+              <span class="sub-nav-title">Store Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="store-master" title="Pin Store Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+
+            <a href="#/storage-locations" class="sub-nav-item nav-item" id="nav-item-storage-locations">
+              <span class="sub-nav-title">Storage Location Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="storage-locations" title="Pin Storage Location Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/racks" class="sub-nav-item nav-item" id="nav-item-racks">
+              <span class="sub-nav-title">Rack Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="racks" title="Pin Rack Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/shelves" class="sub-nav-item nav-item" id="nav-item-shelves">
+              <span class="sub-nav-title">Shelf Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="shelves" title="Pin Shelf Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/bins" class="sub-nav-item nav-item" id="nav-item-bins">
+              <span class="sub-nav-title">Bin Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="bins" title="Pin Bin Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- Organization & Facility Setup Module -->
+        <div class="module-group" id="group-org-location">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🏢</span>
+              <span class="module-header-title">Organization &amp; Facility Setup</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu" id="subgroup-org-location">
+            <a href="#/organizations" class="sub-nav-item nav-item" id="nav-item-organizations">
+              <span class="sub-nav-title">Organisation Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="organizations" title="Pin Organisation Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/branches" class="sub-nav-item nav-item" id="nav-item-branches">
+              <span class="sub-nav-title">Facility Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="branches" title="Pin Facility Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/doc-print-config" class="sub-nav-item nav-item" id="nav-item-doc-print-config">
+              <span class="sub-nav-title">Document Print Configuration Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="doc-print-config" title="Pin Document Print Configuration to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/financial-calendar" class="sub-nav-item nav-item" id="nav-item-financial-calendar">
+              <span class="sub-nav-title">Financial Calendar Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="financial-calendar" title="Pin Financial Calendar Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/doc-series" class="sub-nav-item nav-item" id="nav-item-doc-series">
+              <span class="sub-nav-title">Document Number Series Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="doc-series" title="Pin Document Number Series Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/holiday-master" class="sub-nav-item nav-item" id="nav-item-holiday-master">
+              <span class="sub-nav-title">Holiday Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="holiday-master" title="Pin Holiday Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/registration-config" class="sub-nav-item nav-item" id="nav-item-registration-config">
+              <span class="sub-nav-title">Registration Configuration</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="registration-config" title="Pin Registration Configuration to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/common-master" class="sub-nav-item nav-item" id="nav-item-common-master" data-keywords="common master lookup type title gender referral source discount reason concession reason cancellation reason relationship marital status write-off reason transfer reason">
+              <span class="sub-nav-title">Common Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="common-master" title="Pin Common Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/address-master" class="sub-nav-item nav-item" id="nav-item-address-master" data-keywords="country state district city pincode pin code address master">
+              <span class="sub-nav-title">Address Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="address-master" title="Pin Address Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/tax-master" class="sub-nav-item nav-item" id="nav-item-tax-master" data-keywords="tax master gst cgst sgst igst tax slabs rates taxation hsn sac">
+              <span class="sub-nav-title">Tax Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="tax-master" title="Pin Tax Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+
+        <!-- User Roles & Security Module -->
+        <div class="module-group" id="group-user-roles-security">
+          <div class="module-header" onclick="window.toggleModuleGroup(this)">
+            <div class="module-header-left">
+              <span class="module-header-icon">🔐</span>
+              <span class="module-header-title">User Roles &amp; Security</span>
+            </div>
+            <div class="module-header-right">
+              <span class="module-dropdown-caret">▾</span>
+            </div>
+          </div>
+          <div class="module-sub-menu" id="subgroup-user-roles-security">
+            <a href="#/security-dashboard" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Security Dashboard (KPIs)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="security-dashboard" title="Pin Security Dashboard to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/users" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">User Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="users" title="Pin User Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/roles" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Role Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="roles" title="Pin Role Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/permissions" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Permission Master</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="permissions" title="Pin Permission Master to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/role-permissions" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Role-Permission Matrix</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="role-permissions" title="Pin Role-Permission Matrix to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/user-roles" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">User-Role &amp; Org Hierarchy</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="user-roles" title="Pin User-Role Hierarchy to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/sod-rules" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Segregation of Duties (SoD)</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="sod-rules" title="Pin Segregation of Duties (SoD) to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/approval-authorities" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Approval Limits &amp; Authority</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="approval-authorities" title="Pin Approval Limits &amp; Authority to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/delegations" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Delegations &amp; Temp Access</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="delegations" title="Pin Delegations &amp; Temp Access to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/access-requests" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Access Request Workflow</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="access-requests" title="Pin Access Request Workflow to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/password-policy" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Password Policy Config</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="password-policy" title="Pin Password Policy Config to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/login-security" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Login Security &amp; Lockouts</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="login-security" title="Pin Login Security &amp; Lockouts to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/sessions" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Live User Sessions</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="sessions" title="Pin Live User Sessions to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/login-history" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Authentication History</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="login-history" title="Pin Authentication History to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/access-reports" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Periodic Access Review Reports</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="access-reports" title="Pin Periodic Access Review Reports to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+            <a href="#/user-activity" class="sub-nav-item nav-item">
+              <span class="sub-nav-title">Security Audit Trail</span>
+            <button type="button" class="sidebar-sub-pin-btn " data-submodule-id="user-activity" title="Pin Security Audit Trail to top bar">
+          <svg class="pin-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 17v5"></path>
+            <path d="M9 2h6l-1 7h3l-5 8 1-6H7l2-9z"></path>
+          </svg>
+        </button></a>
+          </div>
+        </div>
+        <!-- Sidebar Logout Button -->
+        <div class="sidebar-logout-footer" style="padding: 10px 14px; border-top: 1px solid var(--border-subtle); margin-top: auto;">
+          <button type="button" id="sidebar-logout-btn" onclick="window.App.handleSignOut()" title="Logout of Application" style="width: 100%; display: flex; align-items: center; gap: 9px; padding: 8px 12px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.22); border-radius: var(--radius-sm); color: #f87171; font-size: 12px; font-weight: 700; cursor: pointer; text-align: left; transition: all 0.2s ease;">
+            <span style="font-size: 14px;">🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Mobile & Tablet Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="window.closeMobileSidebar()"></div>
+
+    <!-- ==================================================================== -->
+    <!-- 2. MAIN APP SHELL -->
+    <!-- ==================================================================== -->
+    <div class="main-wrapper">
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <!-- Mobile & Tablet Hamburger Drawer Toggle Button -->
+          <button type="button" class="sidebar-toggle-btn mobile-toggle-btn" id="sidebar-toggle-btn" onclick="window.toggleMobileSidebar()" aria-label="Toggle navigation menu" title="Open navigation menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <!-- Mobile Brand Logo / Title -->
+          <div class="header-mobile-brand">
+            <div class="header-mobile-brand-icon">IQ</div>
+            <span class="header-mobile-brand-title">StockIQ</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Small Theme Mode Toggle Button (Symbol only, no text) -->
+          <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="window.App.toggleTheme()" title="Switch to Light Mode (Alt+T)" aria-label="Toggle Theme Mode" data-theme="dark">
+            <span class="theme-toggle-icon" id="theme-toggle-icon">🌙</span>
+          </button>
+
+          <!-- Divider -->
+          <div class="header-divider"></div>
+
+          <!-- User Profile (Upper-Right Side) -->
+          <div class="user-profile-menu-container" id="user-profile-menu-container">
+            <button class="user-profile-btn" id="user-profile-trigger-btn" onclick="window.toggleUserProfileMenu(event)" title="User Profile &amp; Account Options">
+              <div class="user-avatar-wrapper">
+                <div class="user-avatar" id="header-user-avatar">PP</div>
+                <span class="user-status-indicator" title="Online"></span>
+              </div>
+              <div class="user-profile-details">
+                <span class="user-profile-name" id="header-user-profile-name">Pravin Patil</span>
+                <span class="user-profile-role" id="header-user-profile-role">System Administrator</span>
+              </div>
+              <span class="user-profile-caret">▾</span>
+            </button>
+
+            <!-- User Profile Flyout Dropdown -->
+            <div class="user-profile-dropdown" id="user-profile-dropdown">
+              <div class="profile-dropdown-header">
+                <div class="profile-dropdown-avatar" id="profile-dropdown-avatar">PP</div>
+                <div class="profile-dropdown-user">
+                  <div class="profile-dropdown-name" id="profile-dropdown-name">Pravin Patil</div>
+                  <div class="profile-dropdown-email" id="profile-dropdown-email">pravinp@apexind.com</div>
+                </div>
+              </div>
+
+              <!-- Basic User Information -->
+              <div class="profile-dropdown-info">
+                <div class="profile-info-row">
+                  <span class="profile-info-label">Role:</span>
+                  <span class="profile-info-val" id="profile-dropdown-role">System Administrator</span>
+                </div>
+                <div class="profile-info-row">
+                  <span class="profile-info-label">Employee ID:</span>
+                  <span class="profile-info-val" id="profile-dropdown-empid" style="font-family: var(--font-mono);">EMP-9042</span>
+                </div>
+                <div class="profile-info-row">
+                  <span class="profile-info-label">Department:</span>
+                  <span class="profile-info-val" id="profile-dropdown-dept">Management Information Systems</span>
+                </div>
+              </div>
+
+              <div class="profile-dropdown-divider"></div>
+
+              <!-- Facility / Branch Switcher Section inside User Profile -->
+              <div class="profile-facility-section">
+                <div class="profile-section-header">
+                  <span class="profile-section-title">Switch Facility</span>
+                </div>
+                <div class="profile-facility-list" id="profile-facility-list">
+      <div class="profile-facility-dropdown-wrapper">
+        <select id="profile-facility-select" class="form-control profile-facility-select" onchange="window.App.switchFacility(this.value)" title="Select Working Facility">
+          <option value="ALL">All Facilities (Consolidated)</option><option value="PLANT-01" selected="">Mauli Service Center - I</option><option value="PLANT-02">Mauli Service Center - II</option>
+        </select>
+      </div>
+    </div>
+              </div>
+
+              <div class="profile-dropdown-divider"></div>
+
+              <!-- Theme Appearance Switcher inside User Profile (Short Dark / Light Switch) -->
+              <div class="profile-theme-section">
+                <div class="profile-theme-short-row">
+                  <span class="profile-section-title">Theme</span>
+                  <div class="profile-theme-short-switch">
+                    <button type="button" class="profile-theme-short-btn profile-theme-btn active" id="profile-opt-dark" onclick="window.setThemeMode('dark')" title="Dark Mode">
+                      <span class="profile-theme-short-icon">🌙</span>
+                      <span>Dark</span>
+                    </button>
+                    <button type="button" class="profile-theme-short-btn profile-theme-btn" id="profile-opt-light" onclick="window.setThemeMode('light')" title="Light Mode">
+                      <span class="profile-theme-short-icon">☀️</span>
+                      <span>Light</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-dropdown-divider"></div>
+
+              <!-- Profile Actions -->
+              <div class="profile-dropdown-actions">
+                <button class="profile-action-item" onclick="window.App.showProfileModal()">
+                  <span class="profile-action-icon">👤</span>
+                  <span>View Full Profile &amp; Access</span>
+                </button>
+                <button class="profile-action-item" onclick="window.App.openQuickActionModal()">
+                  <span class="profile-action-icon">⚡</span>
+                  <span>Quick Transaction Hub</span>
+                </button>
+              </div>
+
+              <div class="profile-dropdown-divider"></div>
+
+              <!-- Logout Button -->
+              <div class="profile-dropdown-footer">
+                <button class="profile-signout-btn" id="profile-dropdown-logout-btn" onclick="window.App.handleSignOut()" title="Logout of Application">
+                  <span class="signout-text">Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Pinned Sub-Modules Bar (Personalized Quick Access Bar - BRD v1.0) -->
+      <div class="pinned-submodules-bar" id="pinned-submodules-bar" style="display: flex;">
+          <div class="pinned-bar-inner empty-bar">
+            <div class="pinned-empty-msg">
+              <span class="pinned-empty-icon">📌</span>
+              <span class="pinned-empty-text">Pin your frequently used sub-modules for quick access.</span>
+            </div>
+            <div class="pinned-bar-actions">
+              <button type="button" class="btn-pin-action-sm" onclick="window.PinnedSubmodulesModule.openManageModal()" title="Add pinned sub-modules">
+                <span>+ Pin Sub-Modules</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      <!-- Page Top Header & Breadcrumbs -->
+      <div class="page-top-bar" id="page-top-bar">
+        <div class="page-title-group">
+          <div class="breadcrumbs">
+            <span id="breadcrumb-section">Overview</span>
+            <span>/</span>
+            <span class="current" id="breadcrumb-current">Executive Operations Dashboard</span>
+          </div>
+          <h1 class="page-title" id="page-title-text">Executive Operations Dashboard</h1>
+        </div>
+        <div class="page-actions" id="page-actions-container"><button type="button" id="header-screen-pin-btn" class="btn btn-sm btn-secondary header-pin-toggle-btn" title="Pin Operations Dashboard to top bar">
+          <span style="font-size: 13px;">📍</span>
+          <span>Pin to Top Bar</span>
+        </button></div>
+      </div>
+
+      <!-- Dynamic View Container -->
+      <main class="main-content" id="view-container">
+      <!-- Lifecycle Stepper Process Navigation -->
+      <div class="lifecycle-stepper">
+        <div class="step-node completed" onclick="location.hash='#/purchase-planning'" style="cursor:pointer;" title="Click to view Planning">
+          <div class="step-index">1</div>
+          <div class="step-label">Planning</div>
+        </div>
+        <div class="step-divider completed"></div>
+        <div class="step-node completed" onclick="location.hash='#/requisitions'" style="cursor:pointer;" title="Requisitions">
+          <div class="step-index">2</div>
+          <div class="step-label">PR</div>
+        </div>
+        <div class="step-divider completed"></div>
+        <div class="step-node completed" onclick="location.hash='#/orders'" style="cursor:pointer;" title="Purchase Orders">
+          <div class="step-index">3</div>
+          <div class="step-label">PO</div>
+        </div>
+        <div class="step-divider completed"></div>
+        <div class="step-node completed" onclick="location.hash='#/grn'" style="cursor:pointer;" title="Goods Receipt">
+          <div class="step-index">4</div>
+          <div class="step-label">GRN</div>
+        </div>
+        <div class="step-divider completed"></div>
+        <div class="step-node active" onclick="location.hash='#/quality'" style="cursor:pointer;" title="Quality QA/QC">
+          <div class="step-index">5</div>
+          <div class="step-label">QA/QC</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-node" onclick="location.hash='#/putaway'" style="cursor:pointer;" title="Putaway">
+          <div class="step-index">6</div>
+          <div class="step-label">Putaway</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-node" onclick="location.hash='#/inventory'" style="cursor:pointer;" title="Inventory Stock">
+          <div class="step-index">7</div>
+          <div class="step-label">Inventory</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-node" onclick="location.hash='#/production'" style="cursor:pointer;" title="Manufacturing WIP">
+          <div class="step-index">8</div>
+          <div class="step-label">Production</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-node" onclick="location.hash='#/transfers'" style="cursor:pointer;" title="Stock Transfers">
+          <div class="step-index">9</div>
+          <div class="step-label">Transfer</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-node" onclick="location.hash='#/dispatch'" style="cursor:pointer;" title="Dispatch &amp; Gate Pass">
+          <div class="step-index">10</div>
+          <div class="step-label">Dispatch</div>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-node" onclick="location.hash='#/reports'" style="cursor:pointer;" title="MIS Reports">
+          <div class="step-index">11</div>
+          <div class="step-label">Reports</div>
+        </div>
+      </div>
+
+      <!-- Top KPI Row -->
+      <div class="kpi-grid" style="display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 10px; margin-bottom: 12px; width: 100%;">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Total Inventory Valuation</span>
+            <div class="kpi-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+          </div>
+          <div class="kpi-value">₹0</div>
+          <div class="kpi-footer">
+            <span class="trend-badge positive">↑ +4.8%</span>
+            <span class="kpi-subtitle">Weighted Average Valuation</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Active Materials On Hand</span>
+            <div class="kpi-icon-wrap cyan">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            </div>
+          </div>
+          <div class="kpi-value">0 <span style="font-size:14px; color:var(--text-muted);">Units</span></div>
+          <div class="kpi-footer">
+            <span style="color:var(--primary-400); font-weight:600;">0</span>
+            <span class="kpi-subtitle">Reserved for Production Orders</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Critical Shortages / Reorder</span>
+            <div class="kpi-icon-wrap success">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+          </div>
+          <div class="kpi-value">0 <span style="font-size:14px; color:var(--text-muted);">SKUs</span></div>
+          <div class="kpi-footer">
+            <a href="#/purchase-planning" style="color:var(--color-danger); font-weight:700; text-decoration:none;">View Replenishment Plan →</a>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Pending Inward / QA</span>
+            <div class="kpi-icon-wrap warning">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            </div>
+          </div>
+          <div class="kpi-value">0 <span style="font-size:14px; color:var(--text-muted);">Tasks</span></div>
+          <div class="kpi-footer">
+            <span class="kpi-subtitle">0 PR Approvals, 0 QA Holds</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mid Section: Analytics SVG Visualizations & Low Stock Matrix -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+        
+        <!-- Inventory Category Breakdown (Clean Responsive SVG Donut) -->
+        <div class="content-card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-400)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10h-10z"></path></svg>
+              Inventory Valuation by Category
+            </div>
+            <span class="status-pill status-approved">Real-Time</span>
+          </div>
+          <div class="card-body" style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:20px;">
+            <div style="position:relative; width:160px; height:160px;">
+              <svg viewBox="0 0 36 36" style="width:100%; height:100%; transform: rotate(-90deg);">
+                <!-- Ring 1: Raw Steels & Billets (42%) -->
+                <circle cx="18" cy="18" r="15.9" fill="transparent" stroke="#4f46e5" stroke-width="3.5" stroke-dasharray="42 58" stroke-dashoffset="0"></circle>
+                <!-- Ring 2: Precision Components (28%) -->
+                <circle cx="18" cy="18" r="15.9" fill="transparent" stroke="#06b6d4" stroke-width="3.5" stroke-dasharray="28 72" stroke-dashoffset="-42"></circle>
+                <!-- Ring 3: Finished Actuators (18%) -->
+                <circle cx="18" cy="18" r="15.9" fill="transparent" stroke="#10b981" stroke-width="3.5" stroke-dasharray="18 82" stroke-dashoffset="-70"></circle>
+                <!-- Ring 4: Electronics & Controllers (12%) -->
+                <circle cx="18" cy="18" r="15.9" fill="transparent" stroke="#f59e0b" stroke-width="3.5" stroke-dasharray="12 88" stroke-dashoffset="-88"></circle>
+              </svg>
+              <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); text-align:center;">
+                <div style="font-size:18px; font-weight:800; color:var(--text-primary);">₹0.0L</div>
+                <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase;">Total Value</div>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; min-width:180px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px;">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="width:10px; height:10px; border-radius:2px; background:#4f46e5;"></span>
+                  Raw Alloys &amp; Steels
+                </span>
+                <span style="font-weight:700; font-family:var(--font-mono); color:var(--text-primary);">42%</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px;">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="width:10px; height:10px; border-radius:2px; background:#06b6d4;"></span>
+                  Mechanical &amp; Bearings
+                </span>
+                <span style="font-weight:700; font-family:var(--font-mono); color:var(--text-primary);">28%</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px;">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="width:10px; height:10px; border-radius:2px; background:#10b981;"></span>
+                  Finished Actuators &amp; FG
+                </span>
+                <span style="font-weight:700; font-family:var(--font-mono); color:var(--text-primary);">18%</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px;">
+                <span style="display:flex; align-items:center; gap:8px;">
+                  <span style="width:10px; height:10px; border-radius:2px; background:#f59e0b;"></span>
+                  Controller Boards
+                </span>
+                <span style="font-weight:700; font-family:var(--font-mono); color:var(--text-primary);">12%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Supply Chain Operational Inflow & Outflow Trend -->
+        <div class="content-card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              Weekly Material Flow (MT/Units)
+            </div>
+            <div style="display:flex; gap:12px; font-size:11px;">
+              <span style="display:flex; align-items:center; gap:4px; color:var(--color-info);">
+                <span style="width:8px; height:8px; border-radius:50%; background:var(--color-info);"></span> Inward GRN
+              </span>
+              <span style="display:flex; align-items:center; gap:4px; color:var(--primary-400);">
+                <span style="width:8px; height:8px; border-radius:50%; background:var(--primary-400);"></span> Production Issue
+              </span>
+            </div>
+          </div>
+          <div class="card-body" style="padding-top:10px;">
+            <!-- SVG Bar Comparison Chart -->
+            <svg viewBox="0 0 380 140" style="width:100%; height:140px;">
+              <line x1="30" y1="120" x2="370" y2="120" stroke="var(--border-medium)" stroke-width="1"></line>
+              <line x1="30" y1="70" x2="370" y2="70" stroke="var(--border-subtle)" stroke-dasharray="3 3"></line>
+              <line x1="30" y1="20" x2="370" y2="20" stroke="var(--border-subtle)" stroke-dasharray="3 3"></line>
+
+              <!-- Week 1 -->
+              <rect x="50" y="45" width="16" height="75" rx="3" fill="#06b6d4"></rect>
+              <rect x="70" y="55" width="16" height="65" rx="3" fill="#6366f1"></rect>
+              <text x="68" y="135" fill="var(--text-muted)" font-size="10" text-anchor="middle">W-33</text>
+
+              <!-- Week 2 -->
+              <rect x="120" y="30" width="16" height="90" rx="3" fill="#06b6d4"></rect>
+              <rect x="140" y="40" width="16" height="80" rx="3" fill="#6366f1"></rect>
+              <text x="138" y="135" fill="var(--text-muted)" font-size="10" text-anchor="middle">W-34</text>
+
+              <!-- Week 3 -->
+              <rect x="190" y="50" width="16" height="70" rx="3" fill="#06b6d4"></rect>
+              <rect x="210" y="35" width="16" height="85" rx="3" fill="#6366f1"></rect>
+              <text x="208" y="135" fill="var(--text-muted)" font-size="10" text-anchor="middle">W-35</text>
+
+              <!-- Week 4 (Current) -->
+              <rect x="260" y="25" width="16" height="95" rx="3" fill="#06b6d4"></rect>
+              <rect x="280" y="30" width="16" height="90" rx="3" fill="#6366f1"></rect>
+              <text x="278" y="135" fill="var(--primary-300)" font-weight="700" font-size="10" text-anchor="middle">W-36 (Curr)</text>
+
+              <!-- Projected -->
+              <rect x="330" y="40" width="14" height="80" rx="3" fill="#06b6d4" opacity="0.4"></rect>
+              <rect x="348" y="45" width="14" height="75" rx="3" fill="#6366f1" opacity="0.4"></rect>
+              <text x="345" y="135" fill="var(--text-muted)" font-size="10" text-anchor="middle">W-37 (Fcst)</text>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Critical Shortage & Immediate Action Table -->
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-danger)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            Critical Production Shortage &amp; Replenishment Queue
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="location.hash='#/purchase-planning'">
+            Open Automated Planning Engine →
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Item Code &amp; Description</th>
+                <th>Category</th>
+                <th class="text-right">Current Available</th>
+                <th class="text-right">Reorder Level</th>
+                <th class="text-right">Safety Stock</th>
+                <th>Lead Time</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td colspan="8" style="text-align:center; padding:30px; color:var(--color-success);">
+                    ✓ All inventory levels are safely above reorder thresholds!
+                  </td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Audit & System Activity -->
+      <div class="content-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-400)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Live Material Movement &amp; Audit Stream
+          </div>
+          <a href="#/audit" class="btn btn-secondary btn-sm">Full Audit Trail →</a>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>User / Operator</th>
+                <th>Action Type</th>
+                <th>Module</th>
+                <th>Reference ID</th>
+                <th>Transaction Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    </div>
+  </div>
+
+  <!-- Global Modal Overlay -->
+  <div class="modal-overlay" id="global-modal-overlay" onclick="if(event.target===this) window.State.closeModal()">
+    <div class="modal-container" id="global-modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title" id="global-modal-title">Modal Title</h3>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button class="modal-close-btn" id="modal-maximize-btn" onclick="window.State.toggleModalFullscreen()" title="Toggle Fullscreen View" style="font-size: 14px;">🗖</button>
+          <button class="modal-close-btn" onclick="window.State.closeModal()" title="Close (Esc)">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" id="global-modal-body">
+        <!-- Injected modal content -->
+      </div>
+      <div class="modal-footer" id="global-modal-footer">
+        <!-- Injected buttons -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ==================================================================== -->
+  <!-- 3. CORE SCRIPTS (Order preserved: Data -> State -> Modules -> App) -->
+  <!-- ==================================================================== -->
+  <script src="js/data/mock-data.js?v=3.7"></script>
+  <script src="js/data/db.js?v=3.6"></script>
+  <script src="js/state.js?v=3.6"></script>
+  <script src="js/pagination.js?v=1.0"></script>
+
+  <!-- Module Controllers -->
+  <script src="js/modules/dashboard.js?v=3.5"></script>
+  <script src="js/modules/purchase-planning.js?v=3.5"></script>
+  <script src="js/modules/requisitions.js?v=3.5"></script>
+  <script src="js/modules/purchase-orders.js?v=3.5"></script>
+  <script src="js/modules/goods-receipt.js?v=3.5"></script>
+  <script src="js/modules/quality-inspection.js?v=3.5"></script>
+  <script src="js/modules/putaway.js?v=3.5"></script>
+  <script src="js/modules/warehouse-visualizer.js?v=3.5"></script>
+  <script src="js/modules/inventory.js?v=3.6"></script>
+  <script src="js/modules/opening-balance.js?v=1.1"></script>
+  <script src="js/modules/transfers.js?v=3.5"></script>
+  <script src="js/modules/receive-transfers.js?v=1.0"></script>
+  <script src="js/modules/production.js?v=3.5"></script>
+  <script src="js/modules/dispatch.js?v=3.5"></script>
+  <script src="js/modules/returns.js?v=3.5"></script>
+  <script src="js/modules/adjustments.js?v=3.5"></script>
+  <script src="js/modules/reports.js?v=3.5"></script>
+  <script src="js/modules/masters.js?v=3.6"></script>
+  <script src="js/modules/common-master.js?v=3.5"></script>
+  <script src="js/modules/common-lookup-master.js?v=3.5"></script>
+  <script src="js/modules/tax-master.js?v=3.5"></script>
+  <script src="js/modules/organizations.js?v=3.5"></script>
+  <script src="js/modules/org-location.js?v=3.5"></script>
+  <script src="js/modules/financial-calendar.js?v=3.6"></script>
+  <script src="js/modules/doc-series-master.js?v=3.6"></script>
+  <script src="js/modules/doc-print-config.js?v=1.3"></script>
+  <script src="js/modules/holiday-master.js?v=1.0"></script>
+  <script src="js/modules/registration-config.js?v=1.1"></script>
+  <script src="js/modules/item-setup-master.js?v=1.2"></script>
+  <script src="js/modules/service-master.js?v=1.0"></script>
+  <script src="js/modules/item-dashboard.js?v=1.0"></script>
+  <script src="js/html2pdf.bundle.min.js"></script>
+  <script src="js/modules/billing.js?v=2.2"></script>
+  <script src="js/modules/customer-reminders.js?v=1.0"></script>
+  <script src="js/modules/store-inventory.js?v=3.5"></script>
+  <script src="js/modules/audit.js?v=3.5"></script>
+  <script src="js/modules/user-management.js?v=3.7"></script>
+  <script src="js/modules/auth.js?v=3.5"></script>
+  <script src="js/modules/pinned-submodules.js?v=1.1"></script>
+
+  <!-- Main Routing & Event Orchestration -->
+  <script src="js/app.js?v=3.7"></script>
+
+
+</body></html>

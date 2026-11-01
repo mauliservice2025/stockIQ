@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ==========================================================================
+   ENTERPRISE ISCM DESIGN SYSTEM - DESIGN TOKENS & VARIABLES
+   Curated Dark/Light Industrial Palette with Glassmorphism & Micro-animations
+   ========================================================================== */
+
+:root,
+[data-theme="dark"] {
+  /* Color Palette - Deep Corporate Dark */
+  --bg-app: #080c14;
+  --bg-sidebar: #0b111e;
+  --bg-header: rgba(11, 17, 30, 0.85);
+  --bg-card: rgba(17, 24, 39, 0.85);
+  --bg-card-hover: rgba(26, 36, 56, 0.95);
+  --bg-surface: #131b2e;
+  --bg-surface-elevated: #1a243b;
+  --bg-input: #0e1626;
+  --bg-toolbar: rgba(11, 17, 30, 0.45);
+  --bg-table-th: rgba(14, 21, 37, 0.9);
+  --bg-modal: #0f172a;
+  --bg-modal-footer: rgba(8, 12, 20, 0.6);
+  --bg-modal-backdrop: rgba(2, 6, 23, 0.72);
+  --modal-backdrop-blur: 6px;
+  --bg-dropdown: rgba(17, 24, 39, 0.96);
+
+  /* Hover & Highlight Tints */
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --hover-subtle: rgba(255, 255, 255, 0.03);
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-focus: #6366f1;
+  --border-accent: rgba(99, 102, 241, 0.4);
+
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+
+  /* Brand Accents */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-300: #a5b4fc;
+  --primary-400: #818cf8;
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5;
+  --primary-700: #4338ca;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+
+  /* Functional Status Colors */
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-success-border: rgba(16, 185, 129, 0.3);
+
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-warning-border: rgba(245, 158, 11, 0.3);
+
+  --color-danger: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.12);
+  --color-danger-border: rgba(239, 68, 68, 0.3);
+
+  --color-info: #06b6d4;
+  --color-info-bg: rgba(6, 182, 212, 0.12);
+  --color-info-border: rgba(6, 182, 212, 0.3);
+
+  --color-purple: #a855f7;
+  --color-purple-bg: rgba(168, 85, 247, 0.12);
+  --color-purple-border: rgba(168, 85, 247, 0.3);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --gradient-card: linear-gradient(145deg, rgba(22, 31, 51, 0.9) 0%, rgba(13, 19, 33, 0.95) 100%);
+  --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 60%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px var(--primary-glow);
+
+  /* Scrollbars */
+  --scrollbar-track: rgba(11, 17, 30, 0.6);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(99, 102, 241, 0.5);
+
+  /* Visualizer Bins */
+  --bg-bin-cell: rgba(22, 32, 54, 0.85);
+  --bg-bin-empty: rgba(18, 25, 41, 0.4);
+}
+
+/* ==========================================================================
+   LIGHT MODE DESIGN TOKENS - CRISP EXECUTIVE ENTERPRISE THEME
+   ========================================================================== */
+[data-theme="light"] {
+  /* Color Palette - Clean Crisp Executive Light */
+  --bg-app: #f4f6fb;
+  --bg-sidebar: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8fafc;
+  --bg-input: #ffffff;
+  --bg-toolbar: #f8fafc;
+  --bg-table-th: #f1f5f9;
+  --bg-modal: #ffffff;
+  --bg-modal-footer: #f8fafc;
+  --bg-modal-backdrop: rgba(15, 23, 42, 0.45);
+  --modal-backdrop-blur: 5px;
+  --bg-dropdown: #ffffff;
+
+  /* Hover & Highlight Tints */
+  --hover-bg: rgba(0, 0, 0, 0.04);
+  --hover-subtle: rgba(0, 0, 0, 0.02);
+
+  /* Borders & Dividers */
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-focus: #4f46e5;
+  --border-accent: rgba(79, 70, 229, 0.3);
+
+  /* Typography Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Brand Accents */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-300: #4f46e5;
+  --primary-400: #6366f1;
+  --primary-500: #4f46e5;
+  --primary-600: #4338ca;
+  --primary-700: #3730a3;
+  --primary-glow: rgba(79, 70, 229, 0.2);
+
+  /* Functional Status Colors (Tuned for light background readability) */
+  --color-success: #059669;
+  --color-success-bg: rgba(5, 150, 105, 0.1);
+  --color-success-border: rgba(5, 150, 105, 0.25);
+
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.1);
+  --color-warning-border: rgba(217, 119, 6, 0.25);
+
+  --color-danger: #dc2626;
+  --color-danger-bg: rgba(220, 38, 38, 0.1);
+  --color-danger-border: rgba(220, 38, 38, 0.25);
+
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.1);
+  --color-info-border: rgba(2, 132, 199, 0.25);
+
+  --color-purple: #7c3aed;
+  --color-purple-bg: rgba(124, 58, 237, 0.1);
+  --color-purple-border: rgba(124, 58, 237, 0.25);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 60%);
+
+  /* Shadows - Crisp & Soft Ambient Multi-layer */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.18);
+
+  /* Scrollbars */
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+
+  /* Visualizer Bins */
+  --bg-bin-cell: #ffffff;
+  --bg-bin-empty: #f1f5f9;
+}
+
+/* System Theme Mode (@media query fallback for [data-theme="system"]) */
+@media (prefers-color-scheme: light) {
+  [data-theme="system"] {
+    --bg-app: #f4f6fb;
+    --bg-sidebar: #ffffff;
+    --bg-header: rgba(255, 255, 255, 0.92);
+    --bg-card: #ffffff;
+    --bg-card-hover: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #f8fafc;
+    --bg-input: #ffffff;
+    --bg-toolbar: #f8fafc;
+    --bg-table-th: #f1f5f9;
+    --bg-modal: #ffffff;
+    --bg-modal-footer: #f8fafc;
+    --bg-modal-backdrop: rgba(15, 23, 42, 0.45);
+    --modal-backdrop-blur: 5px;
+    --bg-dropdown: #ffffff;
+
+    --hover-bg: rgba(0, 0, 0, 0.04);
+    --hover-subtle: rgba(0, 0, 0, 0.02);
+
+    --border-subtle: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-focus: #4f46e5;
+    --border-accent: rgba(79, 70, 229, 0.3);
+
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
+
+    --primary-50: #eef2ff;
+    --primary-100: #e0e7ff;
+    --primary-300: #4f46e5;
+    --primary-400: #6366f1;
+    --primary-500: #4f46e5;
+    --primary-600: #4338ca;
+    --primary-700: #3730a3;
+    --primary-glow: rgba(79, 70, 229, 0.2);
+
+    --color-success: #059669;
+    --color-success-bg: rgba(5, 150, 105, 0.1);
+    --color-success-border: rgba(5, 150, 105, 0.25);
+
+    --color-warning: #d97706;
+    --color-warning-bg: rgba(217, 119, 6, 0.1);
+    --color-warning-border: rgba(217, 119, 6, 0.25);
+
+    --color-danger: #dc2626;
+    --color-danger-bg: rgba(220, 38, 38, 0.1);
+    --color-danger-border: rgba(220, 38, 38, 0.25);
+
+    --color-info: #0284c7;
+    --color-info-bg: rgba(2, 132, 199, 0.1);
+    --color-info-border: rgba(2, 132, 199, 0.25);
+
+    --color-purple: #7c3aed;
+    --color-purple-bg: rgba(124, 58, 237, 0.1);
+    --color-purple-border: rgba(124, 58, 237, 0.25);
+
+    --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 60%);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.09), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.18);
+
+    --scrollbar-track: #f1f5f9;
+    --scrollbar-thumb: #cbd5e1;
+    --scrollbar-thumb-hover: #94a3b8;
+
+    --bg-bin-cell: #ffffff;
+    --bg-bin-empty: #f1f5f9;
+  }
+}
+
+/* Common Layout Tokens (Independent of Theme) */
+:root {
+  /* ==========================================================================
+     TYPOGRAPHY DESIGN TOKENS - INTER DESIGN SYSTEM
+     Strict compliance with Enterprise ISCM Typography Specification:
+     1. Page Title - Common Master: Inter 20px, 700 / Bold
+     2. Section/Menu Heading - MASTERS: Inter 13px, 600 / Semi-bold
+     3. Sidebar Menu: Inter 14px, 400-500
+     4. Selected Menu: Inter 14px, 600
+     5. Form Label - Type: Inter 13-14px, 500
+     6. Dropdown Text: Inter 14px, 400-500
+     7. Table Header: Inter 13px, 600
+     8. Table Data: Inter 14px, 400
+     9. Status - Active: Inter 12px, 500-600
+     10. Breadcrumb: Inter 12-13px, 400-500
+     11. Search Placeholder: Inter 14px, 400
+     12. Pagination: Inter 12-13px, 400-500
+     ========================================================================== */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  /* Unified Typographic Sizing Scale */
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-base: 13px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 18px;
+  --fs-2xl: 20px;
+  --fs-3xl: 24px;
+
+  /* Typography Semantic Sizes */
+  --fs-page-title: 20px;
+  --fs-section-title: 16px;
+  --fs-card-title: 14.5px;
+  --fs-menu-heading: 13px;
+  --fs-sidebar-menu: 14px;
+  --fs-selected-menu: 14px;
+  --fs-form-label: 12.5px;
+  --fs-dropdown: 13px;
+  --fs-table-header: 12px;
+  --fs-table-data: 13px;
+  --fs-status: 11px;
+  --fs-breadcrumb: 12.5px;
+  --fs-placeholder: 13px;
+  --fs-pagination: 12.5px;
+
+  /* Standard Component Heights */
+  --ctrl-height: 34px;
+  --ctrl-height-sm: 30px;
+  --ctrl-height-xs: 26px;
+  --btn-height: 32px;
+  --btn-height-sm: 28px;
+  --btn-icon-size: 28px;
+  --table-th-height: 38px;
+  --table-td-height: 42px;
+
+  /* Typography Weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Sizing & Spacing */
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 70px;
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* High-Contrast Text Selection Highlighting */
+::selection {
+  background: rgba(99, 102, 241, 0.45) !important;
+  color: #ffffff !important;
+}
+
+::-moz-selection {
+  background: rgba(99, 102, 241, 0.45) !important;
+  color: #ffffff !important;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}

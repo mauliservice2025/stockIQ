@@ -1,0 +1,2762 @@
+/* ==========================================================================
+   ENTERPRISE ISCM - REUSABLE UI COMPONENTS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. KPI & METRIC STAT CARDS
+   -------------------------------------------------------------------------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+  min-height: 72px;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-md), 0 0 16px var(--primary-glow);
+}
+
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background: var(--gradient-glow);
+  pointer-events: none;
+}
+
+.kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  gap: 6px;
+}
+
+.kpi-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-icon-wrap {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary-400);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.kpi-icon-wrap svg {
+  width: 14px;
+  height: 14px;
+}
+
+.kpi-icon-wrap.primary {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary-400);
+}
+
+.kpi-icon-wrap.info {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.kpi-icon-wrap.success {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.kpi-icon-wrap.warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.kpi-icon-wrap.danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.kpi-icon-wrap.cyan {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.kpi-value {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.kpi-value span {
+  font-size: 11px !important;
+  font-weight: 500;
+}
+
+.kpi-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  line-height: 1.2;
+}
+
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 5px;
+  border-radius: var(--radius-xs);
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.trend-badge.positive {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.trend-badge.negative {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.trend-badge.neutral {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.kpi-subtitle {
+  color: var(--text-muted);
+  font-size: 10.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi-subtext {
+  font-size: 10.5px;
+  line-height: 1.2;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --------------------------------------------------------------------------
+   2. CONTENT CARDS & SECTIONS
+   -------------------------------------------------------------------------- */
+.content-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title svg {
+  width: 16px;
+  height: 16px;
+}
+
+.card-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.card-body {
+  padding: 14px 16px;
+}
+
+/* --------------------------------------------------------------------------
+   3. FILTER & ACTION TOOLBARS
+   -------------------------------------------------------------------------- */
+.toolbar {
+  padding: 8px 16px;
+  background: var(--bg-toolbar);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toolbar-left, .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-input {
+  height: 34px;
+  padding: 0 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.filter-input:focus {
+  border-color: var(--primary-500);
+}
+
+.filter-select {
+  height: 34px;
+  width: auto;
+  min-width: 140px;
+  max-width: 260px;
+  padding: 0 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  border-color: var(--primary-500);
+}
+
+/* --------------------------------------------------------------------------
+   4. DATA TABLES
+   -------------------------------------------------------------------------- */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.data-table th {
+  background: var(--bg-table-th);
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-medium);
+  white-space: nowrap;
+}
+
+.data-table th.sortable {
+  cursor: pointer;
+  user-select: text;
+}
+
+.data-table th.sortable:hover {
+  color: var(--text-primary);
+}
+
+.data-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  vertical-align: middle;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.data-table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+  background: var(--hover-subtle);
+}
+
+.data-table td.cell-strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.data-table td.cell-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--primary-300);
+}
+
+.data-table td.cell-num {
+  font-family: var(--font-mono);
+  text-align: right;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.data-table th.text-right {
+  text-align: right;
+}
+
+/* Compact Table Density Utility */
+.data-table.compact-table th,
+.table-compact th {
+  padding: 6px 8px !important;
+  font-size: 11px !important;
+  letter-spacing: 0.3px;
+  line-height: 1.25 !important;
+}
+
+.data-table.compact-table td,
+.table-compact td {
+  padding: 5px 8px !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  vertical-align: middle !important;
+}
+
+.data-table.compact-table td.cell-strong,
+.table-compact td.cell-strong {
+  font-size: 12px !important;
+}
+
+.data-table.compact-table td.cell-mono,
+.table-compact td.cell-mono {
+  font-size: 11px !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. STATUS PILLS & BADGES
+   -------------------------------------------------------------------------- */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-draft {
+  background: rgba(148, 163, 184, 0.12);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.status-pending {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning-border);
+}
+
+.status-approved, .status-completed, .status-accepted {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.status-rejected, .status-cancelled {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
+}
+
+.status-in-transit, .status-released {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  border: 1px solid var(--color-info-border);
+}
+
+.status-quarantine, .status-hold {
+  background: var(--color-purple-bg);
+  color: var(--color-purple);
+  border: 1px solid var(--color-purple-border);
+}
+
+/* --------------------------------------------------------------------------
+   6. BUTTONS & ACTIONS
+   -------------------------------------------------------------------------- */
+.btn {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-medium);
+}
+
+.btn-success {
+  background: var(--color-success);
+  color: #ffffff;
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: #ffffff;
+}
+
+.btn-sm {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 11px;
+  border-radius: var(--radius-sm);
+}
+
+.btn-outline {
+  height: 28px;
+  padding: 0 10px;
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  color: var(--text-primary);
+  font-weight: 600;
+  border-radius: var(--radius-sm, 6px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.btn-outline:hover {
+  background: var(--bg-surface-hover, rgba(255, 255, 255, 0.08));
+  border-color: var(--border-medium, rgba(255, 255, 255, 0.2));
+  transform: translateY(-1px);
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0;
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.btn-icon:hover {
+  background: var(--bg-surface-hover, rgba(255, 255, 255, 0.1));
+  border-color: var(--border-medium, rgba(255, 255, 255, 0.22));
+  transform: translateY(-1px);
+}
+
+.btn-icon.btn-sm,
+.btn-icon.btn-xs {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.btn-icon svg {
+  display: block;
+  pointer-events: none;
+}
+
+[data-theme="light"] .btn-outline,
+body.light-theme .btn-outline,
+.theme-light .btn-outline {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #111827;
+}
+
+[data-theme="light"] .btn-outline:hover,
+body.light-theme .btn-outline:hover,
+.theme-light .btn-outline:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+[data-theme="light"] .btn-icon,
+body.light-theme .btn-icon,
+.theme-light .btn-icon {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #1f2937;
+}
+
+[data-theme="light"] .btn-icon:hover,
+body.light-theme .btn-icon:hover,
+.theme-light .btn-icon:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.btn-disabled-blurred,
+.btn.disabled,
+.btn:disabled {
+  opacity: 0.45 !important;
+  filter: blur(0.8px) grayscale(50%) !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+.btn-disabled-wrapper {
+  display: inline-flex;
+  cursor: not-allowed !important;
+  vertical-align: middle;
+}
+
+/* --------------------------------------------------------------------------
+   7. FORM GROUPS & INPUTS
+   -------------------------------------------------------------------------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label,
+label {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.form-label .required,
+label .required {
+  color: var(--color-danger);
+  margin-left: 2px;
+}
+
+.form-control,
+select,
+input.form-control,
+select.form-control {
+  width: 100%;
+  height: 38px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+select option {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+/* Global Placeholder Styling */
+::placeholder,
+input::placeholder,
+textarea::placeholder,
+.form-control::placeholder,
+.filter-input::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  opacity: 0.85;
+}
+
+.form-control:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+textarea.form-control {
+  height: 80px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+/* --------------------------------------------------------------------------
+   8. MODAL DIALOGS
+   -------------------------------------------------------------------------- */
+.modal-overlay,
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-modal-backdrop, rgba(2, 6, 23, 0.72));
+  backdrop-filter: blur(var(--modal-backdrop-blur, 6px));
+  -webkit-backdrop-filter: blur(var(--modal-backdrop-blur, 6px));
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  background: var(--bg-modal);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.95);
+  transition: transform var(--transition-fast);
+  overflow: hidden;
+}
+
+.modal-overlay.active .modal-container {
+  transform: scale(1);
+}
+
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-modal-footer);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Fullscreen Modal Variant & Scroll Optimization */
+.modal-overlay.is-fullscreen,
+.modal-overlay:has(.modal-fullscreen) {
+  padding: 10px !important;
+}
+
+.modal-container.modal-fullscreen {
+  width: calc(100vw - 20px) !important;
+  max-width: calc(100vw - 20px) !important;
+  height: calc(100vh - 20px) !important;
+  max-height: calc(100vh - 20px) !important;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-container.modal-fullscreen .modal-header {
+  padding: 14px 24px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.modal-container.modal-fullscreen .modal-body {
+  padding: 20px 24px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.modal-container.modal-fullscreen .modal-body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.modal-container.modal-fullscreen .modal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.modal-container.modal-fullscreen .modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.modal-container.modal-fullscreen .modal-footer {
+  padding: 10px 20px;
+  flex-shrink: 0;
+}
+
+/* Compact Opening Balance Form & Fullscreen Density */
+.ob-compact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ob-compact-form .form-group {
+  margin-bottom: 0 !important;
+  min-width: 0;
+}
+.ob-compact-form .form-label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  margin-bottom: 2px !important;
+  color: var(--text-secondary);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ob-compact-form input.form-control,
+.ob-compact-form select.form-control {
+  height: 28px !important;
+  font-size: 11.5px !important;
+  padding: 2px 7px !important;
+}
+.ob-compact-form .data-table th,
+.ob-compact-form .data-table td {
+  padding: 4px 6px !important;
+  vertical-align: middle;
+}
+.modal-fullscreen .ob-compact-form {
+  gap: 10px;
+}
+.modal-fullscreen .ob-modal-table-wrap {
+  max-height: calc(100vh - 215px) !important;
+}
+
+/* Compact Single-Screen Modal Forms (e.g. Create Job Card) */
+.jc-compact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.jc-compact-form .form-group {
+  margin-bottom: 0 !important;
+  gap: 1px !important;
+  min-width: 0;
+}
+.jc-compact-form .form-label {
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  margin-bottom: 1px !important;
+  color: var(--text-secondary);
+  line-height: 1.1 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jc-compact-form input.form-control,
+.jc-compact-form select.form-control {
+  height: 22px !important;
+  font-size: 10.5px !important;
+  padding: 1px 6px !important;
+  line-height: 1.2 !important;
+  border-radius: 4px !important;
+}
+.jc-compact-form input::placeholder,
+.jc-compact-form textarea::placeholder {
+  font-size: 10px !important;
+  line-height: 1.1 !important;
+}
+.jc-compact-form select option {
+  font-size: 11px !important;
+  padding: 2px 4px !important;
+}
+.jc-compact-form textarea.form-control {
+  font-size: 10.5px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 48px !important;
+  padding: 2px 6px !important;
+  line-height: 1.2 !important;
+  resize: vertical !important;
+  border-radius: 4px !important;
+  transition: height 0.15s ease;
+}
+.jc-compact-form textarea.form-control:focus {
+  height: 40px !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. TABS NAVIGATION
+   -------------------------------------------------------------------------- */
+.tabs-header {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 6px !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+}
+
+.inventory-logistics-tabs {
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--primary-400);
+  border-bottom-color: var(--primary-500);
+}
+
+.tab-count {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. TIMELINE STEPPER FOR LIFECYCLE
+   -------------------------------------------------------------------------- */
+.lifecycle-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 28px 0;
+  padding: 14px 20px;
+  background: rgba(14, 22, 38, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  gap: 12px;
+}
+
+.step-node {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  opacity: 0.45;
+  transition: opacity var(--transition-fast);
+}
+
+.step-node.active, .step-node.completed {
+  opacity: 1;
+}
+
+.step-index {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.step-node.active .step-index {
+  background: var(--gradient-primary);
+  color: #ffffff;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.step-node.completed .step-index {
+  background: var(--color-success);
+  color: #ffffff;
+}
+
+.step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.step-divider {
+  flex: 1;
+  height: 2px;
+  background: var(--border-subtle);
+  min-width: 20px;
+}
+
+.step-divider.completed {
+  background: var(--color-success);
+}
+
+/* --------------------------------------------------------------------------
+   11. TOAST NOTIFICATIONS
+   -------------------------------------------------------------------------- */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  min-width: 320px;
+  max-width: 420px;
+  background: var(--bg-modal);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideIn 0.25s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast.success {
+  border-left: 4px solid var(--color-success);
+}
+
+.toast.error {
+  border-left: 4px solid var(--color-danger);
+}
+
+.toast.info {
+  border-left: 4px solid var(--color-info);
+}
+
+.toast.warning {
+  border-left: 4px solid var(--color-warning, #f59e0b);
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+
+/* ==========================================================================
+   13. GLOBAL TYPOGRAPHY ENFORCEMENT (INTER DESIGN SYSTEM SPEC)
+   Strictly enforces the 12 UI typography specifications across the application:
+   1. Page Title - Common Master: Inter 20px, 700 / Bold
+   2. Section/Menu Heading - MASTERS: Inter 13px, 600 / Semi-bold
+   3. Sidebar Menu: Inter 14px, 400-500
+   4. Selected Menu: Inter 14px, 600
+   5. Form Label - Type: Inter 13-14px, 500
+   6. Dropdown Text: Inter 14px, 400-500
+   7. Table Header: Inter 13px, 600
+   8. Table Data: Inter 14px, 400
+   9. Status - Active: Inter 12px, 500-600
+   10. Breadcrumb: Inter 12-13px, 400-500
+   11. Search Placeholder: Inter 14px, 400
+   12. Pagination: Inter 12-13px, 400-500
+   ========================================================================== */
+
+/* 1. Page Title - Common Master (20px, 700 / Bold) */
+.page-title,
+#page-title-text,
+.page-title-group h1,
+.page-title-group h2,
+.content-page-title {
+  font-family: var(--font-sans) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.25;
+}
+
+/* 2. Section/Menu Heading - MASTERS (13px, 600 / Semi-bold) */
+.module-header,
+.module-header-title,
+.sub-module-title-wrap,
+.sidebar-section-heading {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+/* 3. Sidebar Menu (14px, 400-500) */
+.sidebar .nav-item,
+.sidebar .sub-nav-item,
+.sidebar .sub-nav-title,
+.sidebar .sub-sub-nav-item,
+.sidebar .sub-sub-nav-item .sub-nav-title {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+/* 4. Selected Menu (14px, 600) */
+.sidebar .nav-item.active,
+.sidebar .sub-nav-item.active,
+.sidebar .sub-nav-item.active .sub-nav-title,
+.sidebar .sub-sub-nav-item.active,
+.sidebar .sub-sub-nav-item.active .sub-nav-title {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+/* 5. Form Label - Type (13-14px, 500) */
+label,
+.form-label,
+.filter-label,
+.form-group label {
+  font-family: var(--font-sans) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+}
+
+/* 6. Dropdown Text (14px, 400-500) */
+select,
+select.form-control,
+.form-control,
+.filter-select,
+select option {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+/* 7. Table Header (13px, 600) */
+.data-table th,
+table.data-table th,
+table.data-table thead th,
+table th,
+thead th,
+.user-master-table th,
+.perm-matrix-table th {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+/* 8. Table Data (14px, 400) */
+.data-table td,
+table.data-table td,
+table.data-table tbody td,
+table td,
+tbody td,
+.user-master-table td,
+.perm-matrix-table td {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 400;
+}
+
+.data-table td.cell-strong,
+table td.cell-strong {
+  font-weight: 600 !important;
+}
+
+/* 9. Status - Active (12px, 500-600) */
+.status-pill,
+.status-badge,
+.badge-status,
+.status-active,
+.status-approved,
+.status-completed,
+.status-accepted,
+.status-rejected,
+.status-pending,
+.status-draft {
+  font-family: var(--font-sans) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+/* 10. Breadcrumb (12-13px, 400-500) */
+.breadcrumbs,
+.breadcrumbs span,
+.breadcrumbs a {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+}
+
+.breadcrumbs .current {
+  font-weight: 500 !important;
+  color: var(--primary-300);
+}
+
+/* 11. Search Placeholder (14px, 400) */
+::placeholder,
+input::placeholder,
+textarea::placeholder,
+.form-control::placeholder,
+.sidebar-search-input::placeholder,
+.filter-input::placeholder {
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: var(--text-muted);
+}
+
+/* 12. Pagination (12-13px, 400-500) */
+.user-pagination-bar,
+.user-pagination-bar div,
+.user-pagination-bar span {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+}
+
+.user-pagination-bar strong {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+.user-pagination-bar select,
+.user-pagination-bar select.form-control {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.pagination-buttons .btn,
+.pagination-buttons button,
+.pagination-btn {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+}
+
+.pagination-buttons .btn.btn-primary,
+.pagination-buttons button.active {
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   ENTERPRISE ISCM - COMPONENT RESPONSIVE ADAPTATIONS (MOBILE & TAB)
+   ========================================================================== */
+
+/* 1. Touch targets and smooth scrolling base */
+@media (pointer: coarse) {
+  .btn,
+  .tab-btn,
+  .form-control,
+  .filter-input,
+  .filter-select,
+  select {
+    min-height: 40px;
+  }
+
+  .btn-sm {
+    min-height: 34px;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* 2. Responsive Tabs Navigation Bar */
+.tabs-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+}
+
+.tabs-header::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+
+/* 3. Responsive Data Tables */
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* 4. Breakpoint: Tablet & Below (<= 1024px) */
+@media (max-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .modal-container {
+    max-width: 94vw !important;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+
+  .toolbar-left,
+  .toolbar-right {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .toolbar-right {
+    justify-content: flex-end;
+  }
+
+  .billing-stepper-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* 5. Breakpoint: Mobile & Small Tablet (<= 768px) */
+@media (max-width: 768px) {
+  /* Modals: mobile card sheets */
+  .modal-overlay {
+    padding: 6px;
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal-container {
+    width: 100% !important;
+    max-width: calc(100vw - 12px) !important;
+    max-height: calc(100vh - 12px) !important;
+    margin: 6px auto !important;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-container.modal-fullscreen {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 12px) !important;
+    max-height: calc(100vh - 12px) !important;
+    margin: 6px auto !important;
+  }
+
+  .modal-header {
+    padding: 12px 14px;
+  }
+
+  .modal-title {
+    font-size: 15px;
+  }
+
+  .modal-body {
+    padding: 14px;
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal-footer {
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: stretch;
+  }
+
+  .modal-footer .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Table styling on mobile */
+  .data-table th {
+    padding: 8px 10px;
+    font-size: 11.5px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+
+  .data-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .data-table td.cell-strong {
+    font-size: 12px !important;
+  }
+
+  .data-table .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  /* Card content */
+  .card-header {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .card-title {
+    font-size: 13px;
+  }
+
+  /* Tabs on mobile */
+  .tab-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .store-submodules-nav {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .store-submodules-nav > div {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .store-submodules-nav .btn {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+/* 6. Breakpoint: Compact Mobile Screens (<= 640px) */
+@media (max-width: 640px) {
+  /* KPI 2-Column Grid */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .kpi-card {
+    padding: 8px 10px;
+    min-height: 64px;
+  }
+
+  .kpi-label {
+    font-size: 9.5px;
+  }
+
+  .kpi-value {
+    font-size: 16px;
+  }
+
+  .kpi-icon-wrap {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    font-size: 10px;
+  }
+
+  .kpi-footer {
+    font-size: 9.5px;
+    gap: 4px;
+  }
+
+  /* Form grids: 1 column */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-control,
+  select,
+  input.form-control,
+  select.form-control {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  /* Toolbars full width stacked */
+  .toolbar-left,
+  .toolbar-right {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .toolbar-right {
+    justify-content: stretch;
+  }
+
+  .filter-input,
+  .filter-select,
+  .toolbar .btn,
+  .toolbar-left > *,
+  .toolbar-right > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Billing Stepper on mobile */
+  .billing-stepper-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  /* Card header controls stacking on mobile */
+  .card-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .card-header > div {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+
+  .card-header input[type="text"],
+  .card-header input[type="search"],
+  .card-header select {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Toasts */
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-width: calc(100vw - 20px);
+  }
+
+  .toast {
+    width: 100%;
+    font-size: 13px;
+  }
+}
+
+/* 7. Breakpoint: Extra Small Phones (<= 360px) */
+@media (max-width: 360px) {
+  .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .billing-stepper-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   COMPONENT TEXT SELECTION ENABLING (MASTER TABS, CARDS, TABLES & HEADERS)
+   ========================================================================== */
+.tabs-header,
+.tabs-header *,
+.tab-btn,
+.tab-btn *,
+.store-submodules-nav,
+.store-submodules-nav *,
+.card-header,
+.card-header *,
+.card-title,
+.card-subtitle,
+.data-table,
+.data-table th,
+.data-table td,
+.data-table th *,
+.data-table td *,
+.cell-strong,
+.badge,
+.nav-item-badge,
+.modal-title,
+.modal-header * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+/* ==========================================================================
+   BILLING & WORKSHOP MANAGEMENT - SEAMLESS FULL-SCREEN COMPACT CARD SYSTEM
+   ========================================================================== */
+.billing-module-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  gap: 0 !important;
+}
+
+.billing-top-nav-card,
+.billing-module-container > .billing-top-nav-card,
+.reminder-module-container > .billing-top-nav-card {
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  height: auto !important;
+  min-height: unset !important;
+  background: var(--bg-card) !important;
+  padding: 4px 16px 0 16px !important;
+}
+
+.billing-module-container #billing-subview-container,
+.billing-module-container #billing-subview-container > div,
+.reminder-module-container #reminder-subview-container,
+.reminder-module-container #reminder-subview-container > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.billing-module-container #billing-subview-container > .content-card,
+.billing-module-container #billing-subview-container > div:not(.billing-dashboard-view) > .content-card,
+.reminder-module-container #reminder-subview-container > .content-card,
+.reminder-module-container #reminder-subview-container > div > .content-card,
+.estimate-management-screen-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border-top: none !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+/* Ensure Dashboard cards retain natural compact heights and full borders */
+.billing-dashboard-view {
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+.billing-dashboard-view .content-card,
+.billing-dashboard-view .dashboard-stepper-card {
+  flex: none !important;
+  height: auto !important;
+  min-height: auto !important;
+}
+.billing-dashboard-view .content-card {
+  border-top: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   ENTERPRISE ISCM - UNIFIED APPLICATION DESIGN SYSTEM (FONT, FORMAT, SIZE, COLOUR)
+   Harmonizes every module, table, card, toolbar, input, and badge across the application
+   ========================================================================== */
+
+/* 1. UNIVERSAL FONT & TEXT NORMALIZATION */
+*,
+*::before,
+*::after,
+body,
+input,
+select,
+textarea,
+button,
+table,
+th,
+td,
+label,
+h1, h2, h3, h4, h5, h6,
+p, span, div, a {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+/* Strictly enforce Monospace Font for codes, parts, numbers, prices, IDs */
+.cell-mono,
+.font-mono,
+.cell-num,
+code,
+pre,
+.badge-mono,
+.badge-id,
+.item-code,
+.part-number,
+.cin-badge {
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+  letter-spacing: -0.2px;
+}
+
+/* 2. UNIFIED SCREEN & PAGE HEADERS */
+.page-header,
+.screen-header,
+.view-header,
+.page-top-bar:not([style*="display: none"]):not([style*="display:none"]):not(.hidden),
+.module-top-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+  padding: 0 !important;
+}
+
+#page-top-bar[style*="display: none"],
+#page-top-bar[style*="display:none"],
+.page-top-bar.hidden,
+body.is-billing-route #page-top-bar,
+body.is-billing-route .page-top-bar {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.page-title,
+.screen-title,
+.content-page-title,
+.page-title-group h1,
+.page-title-group h2,
+#page-title-text {
+  font-family: var(--font-sans) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.3px !important;
+  color: var(--text-primary) !important;
+  margin: 0 !important;
+}
+
+.page-subtitle,
+.screen-subtitle,
+.page-desc,
+.breadcrumbs,
+.breadcrumb {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  color: var(--text-muted) !important;
+  line-height: 1.35 !important;
+}
+
+/* 3. UNIFIED CONTENT CARDS & PANELS */
+.content-card,
+.card,
+.panel,
+.box-container {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md, 10px) !important;
+  box-shadow: var(--shadow-sm) !important;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* 4. UNIFIED TOOLBARS & FILTER BARS */
+.card-header,
+.toolbar,
+.table-toolbar,
+.filter-toolbar,
+.filter-bar,
+.filter-container,
+.search-filter-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  background: var(--bg-toolbar) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.card-title,
+.panel-title,
+.section-title {
+  font-family: var(--font-sans) !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.2px !important;
+}
+
+/* 5. UNIFIED FORM CONTROLS & INPUTS */
+.form-control,
+input.form-control,
+select.form-control,
+textarea.form-control,
+.filter-select {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  height: 32px !important;
+  padding: 4px 10px;
+  border-radius: 6px !important;
+  background: var(--bg-input) !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-primary) !important;
+  transition: all var(--transition-fast);
+}
+
+/* Universal Search Inputs & Search Icon Text Clearance */
+.search-input,
+input[type="search"],
+input.search-input,
+input[id*="search" i],
+input[class*="search" i],
+div:has(> span[style*="position: absolute"]) > input,
+div:has(> span:first-child) > input.form-control[placeholder*="Search" i],
+div:has(> span:first-child) > input.form-control[placeholder*="search" i],
+div:has(> span:first-child) > input.filter-input {
+  padding-left: 32px !important;
+}
+
+/* Clear button spacing on right when search input has a clear button */
+div:has(> button[onclick*="search" i]) > input,
+div:has(> button[onclick*="Search"]) > input,
+div:has(> button[title*="Clear" i]) > input,
+div:has(> button[style*="position: absolute; right"]) > input {
+  padding-right: 28px !important;
+}
+
+/* Ensure search icon is properly aligned vertically and cannot block clicks */
+div:has(> input) > span:first-child,
+.search-icon-left,
+.sidebar-search-icon {
+  pointer-events: none !important;
+  user-select: none !important;
+  z-index: 2 !important;
+}
+
+textarea.form-control {
+  height: auto !important;
+  min-height: 70px !important;
+  padding: 8px 10px !important;
+}
+
+.form-control:focus,
+input.form-control:focus,
+select.form-control:focus,
+textarea.form-control:focus {
+  border-color: var(--border-focus, #6366f1) !important;
+  box-shadow: 0 0 0 2px var(--primary-glow) !important;
+  outline: none !important;
+}
+
+label,
+.form-label,
+.filter-label,
+.form-group label {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: 4px !important;
+  display: block;
+}
+
+/* 6. UNIFIED TAB NAVIGATION */
+.tabs,
+.tabs-nav,
+.tabs-header,
+.tab-nav,
+.nav-tabs,
+.sub-nav-tabs {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+  padding: 0 12px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  background: var(--bg-toolbar) !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+}
+
+.tab-btn,
+.tab-item,
+.nav-tab-btn {
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  height: 38px !important;
+  padding: 0 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: none !important;
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  color: var(--text-muted) !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: all var(--transition-fast) !important;
+  border-radius: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.tab-btn:hover,
+.tab-item:hover,
+.nav-tab-btn:hover {
+  color: var(--text-primary) !important;
+  background: var(--hover-subtle) !important;
+}
+
+.tab-btn.active,
+.tab-item.active,
+.nav-tab-btn.active {
+  color: var(--primary-400) !important;
+  border-bottom-color: var(--primary-500) !important;
+  font-weight: 600 !important;
+  background: var(--hover-subtle) !important;
+}
+
+[data-theme="light"] .tab-btn.active,
+body.light-theme .tab-btn.active {
+  color: var(--primary-600) !important;
+  border-bottom-color: var(--primary-600) !important;
+}
+
+/* 7. UNIFIED DATA TABLES & FULL-SCREEN UTILIZATION */
+.table-responsive {
+  width: 100% !important;
+  overflow-x: auto !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 8px !important;
+  margin-bottom: 6px !important;
+}
+
+/* Dedicated Scrollable Table Container - Fills vertical screen down to pagination smoothly without artificial empty space */
+.table-scroll-container,
+.jobcard-table-scroll-container,
+.user-table-scroll-container {
+  flex: 1 1 auto;
+  min-height: 180px;
+  max-height: calc(100vh - 215px);
+  overflow-y: auto !important;
+  overflow-x: auto !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 8px !important;
+  position: relative !important;
+  margin-bottom: 6px !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-500) rgba(15, 23, 42, 0.7);
+}
+
+.table-responsive {
+  width: 100% !important;
+  overflow-x: auto !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 8px !important;
+  margin-bottom: 6px !important;
+}
+
+/* Modal table responsive override so modals retain proper proportions */
+.modal-body .table-responsive,
+.modal-container .table-responsive {
+  min-height: auto !important;
+  max-height: 50vh !important;
+}
+
+/* Universal Full Viewport Expansion for all Module Screens */
+.main-content > div:not(.modal-overlay):not(.toast-container):not(.tabs-header):not(.inventory-logistics-tabs):not(.user-management-nav-ribbon):not(.kpi-grid):not(.dash-kpi-grid):not(.lifecycle-stepper),
+.main-content > .content-card,
+.main-content > form {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.kpi-grid,
+.main-content > .kpi-grid,
+.main-content > div.kpi-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  grid-auto-flow: row !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+  flex: 0 0 auto !important;
+}
+
+.main-content > .tabs-header {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  white-space: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+.main-content > .content-card:not(.billing-top-nav-card):not(.top-nav-card) {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-bottom: 4px !important;
+}
+
+.content-card {
+  margin-top: 0 !important;
+  min-height: 0;
+}
+
+/* Universal Pagination Bar Anchor to Bottom Edge */
+.user-pagination-bar,
+.pagination-wrapper,
+.pagination-container,
+.card-footer {
+  margin-top: auto !important;
+  flex-shrink: 0;
+}
+
+.jobcard-table-scroll-container::-webkit-scrollbar,
+.table-scroll-container::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+.jobcard-table-scroll-container::-webkit-scrollbar-track,
+.table-scroll-container::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 4px;
+}
+
+.jobcard-table-scroll-container::-webkit-scrollbar-thumb,
+.table-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--primary-600);
+  border-radius: 4px;
+  border: 2px solid rgba(15, 23, 42, 0.7);
+}
+
+.jobcard-table-scroll-container::-webkit-scrollbar-thumb:hover,
+.table-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-500);
+}
+
+[data-theme="light"] .jobcard-table-scroll-container,
+[data-theme="light"] .table-scroll-container,
+body.light-theme .jobcard-table-scroll-container,
+body.light-theme .table-scroll-container {
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+[data-theme="light"] .jobcard-table-scroll-container::-webkit-scrollbar-track,
+[data-theme="light"] .table-scroll-container::-webkit-scrollbar-track,
+body.light-theme .jobcard-table-scroll-container::-webkit-scrollbar-track,
+body.light-theme .table-scroll-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+[data-theme="light"] .jobcard-table-scroll-container::-webkit-scrollbar-thumb,
+[data-theme="light"] .table-scroll-container::-webkit-scrollbar-thumb,
+body.light-theme .jobcard-table-scroll-container::-webkit-scrollbar-thumb,
+body.light-theme .table-scroll-container::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border: 2px solid #f1f5f9;
+}
+
+/* Sticky Header in scrollable table containers */
+.jobcard-table-scroll-container table,
+.table-scroll-container table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+}
+
+.jobcard-table-scroll-container thead th,
+.table-scroll-container thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background: var(--bg-table-th) !important;
+  box-shadow: 0 1.5px 0 var(--border-medium) !important;
+}
+
+/* Ultra-compact columns for Odometer, Parts Status, and Status */
+.jobcard-table-scroll-container th.col-odo,
+.jobcard-table-scroll-container td.col-odo,
+.data-table th.col-odo,
+.data-table td.col-odo {
+  width: 1% !important;
+  white-space: nowrap !important;
+  padding: 6px 8px !important;
+  max-width: 90px !important;
+}
+
+.jobcard-table-scroll-container th.col-parts,
+.jobcard-table-scroll-container td.col-parts,
+.data-table th.col-parts,
+.data-table td.col-parts {
+  width: 1% !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  padding: 6px 6px !important;
+  max-width: 80px !important;
+}
+
+.jobcard-table-scroll-container th.col-status,
+.jobcard-table-scroll-container td.col-status,
+.data-table th.col-status,
+.data-table td.col-status {
+  width: 1% !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  padding: 6px 6px !important;
+  max-width: 100px !important;
+}
+
+.data-table,
+table.data-table,
+table.table-striped,
+table.table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+}
+
+.data-table th,
+table.data-table th,
+table.data-table thead th,
+table th,
+thead th {
+  background: var(--bg-table-th) !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+  letter-spacing: 0.5px !important;
+  padding: 10px 14px !important;
+  border-bottom: 1.5px solid var(--border-medium) !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+}
+
+.data-table td,
+table.data-table td,
+table.data-table tbody td,
+table td,
+tbody td {
+  padding: 10px 14px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  vertical-align: middle !important;
+  line-height: 1.4 !important;
+}
+
+.data-table tbody tr,
+table.data-table tbody tr {
+  transition: background var(--transition-fast) !important;
+}
+
+.data-table tbody tr:hover,
+table.data-table tbody tr:hover {
+  background: var(--hover-subtle) !important;
+}
+
+.data-table td.cell-strong,
+table td.cell-strong {
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  font-size: 13px !important;
+}
+
+/* Secondary info inside table cells (sub-labels, hint text) */
+.data-table td .text-muted,
+.data-table td div[style*="color: var(--text-muted)"],
+.data-table td span[style*="color: var(--text-muted)"] {
+  font-size: 11.5px !important;
+  color: var(--text-muted) !important;
+}
+
+/* Primary titles inside table cells */
+.data-table td div[style*="font-weight: 600"],
+.data-table td div[style*="font-weight: 500"] {
+  font-size: 13px !important;
+  color: var(--text-primary) !important;
+}
+
+/* Right alignment consistency */
+.data-table th.text-right,
+.data-table td.text-right,
+table th.text-right,
+table td.text-right {
+  text-align: right !important;
+}
+
+/* 8. UNIFIED STATUS BADGES & PILLS */
+.badge,
+.status-pill,
+.status-badge,
+.badge-status {
+  font-family: var(--font-sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  padding: 2.5px 8px !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+}
+
+/* Active / Success */
+.badge-success,
+.status-pill.status-approved,
+.status-pill.status-active,
+.status-pill.status-completed,
+.status-pill.status-accepted,
+.badge.badge-success {
+  color: var(--color-success, #10b981) !important;
+  background: var(--color-success-bg, rgba(16, 185, 129, 0.12)) !important;
+  border: 1px solid var(--color-success-border, rgba(16, 185, 129, 0.3)) !important;
+}
+
+/* Inactive / Danger / Rejected */
+.badge-danger,
+.status-pill.status-rejected,
+.status-pill.status-inactive,
+.badge.badge-danger {
+  color: var(--color-danger, #ef4444) !important;
+  background: var(--color-danger-bg, rgba(239, 68, 68, 0.12)) !important;
+  border: 1px solid var(--color-danger-border, rgba(239, 68, 68, 0.3)) !important;
+}
+
+/* Warning / Pending / Locked */
+.badge-warning,
+.status-pill.status-pending,
+.status-pill.status-warning,
+.status-pill.status-locked,
+.badge.badge-warning {
+  color: var(--color-warning, #f59e0b) !important;
+  background: var(--color-warning-bg, rgba(245, 158, 11, 0.12)) !important;
+  border: 1px solid var(--color-warning-border, rgba(245, 158, 11, 0.3)) !important;
+}
+
+/* Info / Draft / Primary */
+.badge-info,
+.badge-primary,
+.status-pill.status-info,
+.status-pill.status-draft,
+.badge.badge-primary {
+  color: var(--primary-300, #a5b4fc) !important;
+  background: rgba(99, 102, 241, 0.12) !important;
+  border: 1px solid rgba(99, 102, 241, 0.28) !important;
+}
+
+[data-theme="light"] .badge-info,
+[data-theme="light"] .badge-primary,
+body.light-theme .badge-primary {
+  color: var(--primary-600, #4338ca) !important;
+  background: rgba(79, 70, 229, 0.1) !important;
+  border: 1px solid rgba(79, 70, 229, 0.22) !important;
+}
+
+/* Neutral / Subtle */
+.badge-subtle,
+.badge-secondary,
+.status-pill.status-neutral {
+  color: var(--text-muted, #94a3b8) !important;
+  background: var(--hover-bg, rgba(255, 255, 255, 0.05)) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
+}
+
+[data-theme="light"] .badge-subtle,
+[data-theme="light"] .badge-secondary,
+body.light-theme .badge-subtle {
+  color: #475569 !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* 9. UNIFIED BUTTONS */
+.btn {
+  font-family: var(--font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: all var(--transition-fast) !important;
+  text-decoration: none !important;
+}
+
+.btn-sm {
+  height: 28px !important;
+  font-size: 12px !important;
+  padding: 0 10px !important;
+}
+
+.btn-xs {
+  height: 26px !important;
+  font-size: 11.5px !important;
+  padding: 0 8px !important;
+}
+
+/* Action button in table cells (Configure button pill) */
+.btn-outline.btn-sm,
+.btn-outline {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  padding: 2px 9px !important;
+  height: 28px !important;
+}
+
+/* Icon Buttons (28x28 square) */
+.btn-icon,
+.btn-icon.btn-sm,
+.btn-icon.btn-xs {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 10. UNIFIED PAGINATION CONTROLS */
+.pagination-container,
+.table-pagination,
+.user-pagination-bar {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  padding: 10px 14px !important;
+  background: var(--bg-toolbar) !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  font-size: 12.5px !important;
+  color: var(--text-muted) !important;
+}
+
+.pagination-controls,
+.pagination-buttons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.pagination-controls .btn,
+.pagination-buttons .btn,
+.pagination-btn {
+  height: 28px !important;
+  min-width: 28px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+}
+
+/* 11. UNIFIED MODAL DIALOGS */
+.modal-dialog,
+.modal-card {
+  background: var(--bg-modal, var(--bg-surface)) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: var(--radius-md, 12px) !important;
+  box-shadow: var(--shadow-xl) !important;
+  overflow: hidden !important;
+}
+
+.modal-header {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background: var(--bg-toolbar) !important;
+}
+
+.modal-title,
+.modal-header h3 {
+  font-family: var(--font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  margin: 0 !important;
+}
+
+.modal-body {
+  padding: 16px 20px !important;
+}
+
+.modal-footer {
+  padding: 12px 18px !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  background: var(--bg-modal-footer, var(--bg-toolbar)) !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+/* 12. LIGHT THEME HARMONIZATION OVERRIDES */
+[data-theme="light"],
+body.light-theme,
+.theme-light {
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --bg-app: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8fafc;
+  --bg-table-th: #f1f5f9;
+  --bg-toolbar: #f8fafc;
+  --bg-modal: #ffffff;
+  --bg-input: #ffffff;
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+}
+
+[data-theme="light"] .data-table th,
+body.light-theme .data-table th {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border-bottom: 1.5px solid #cbd5e1 !important;
+}
+
+[data-theme="light"] .data-table td,
+body.light-theme .data-table td {
+  color: #0f172a !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+[data-theme="light"] .data-table tbody tr:hover,
+body.light-theme .data-table tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+[data-theme="light"] .content-card,
+[data-theme="light"] .card,
+body.light-theme .content-card,
+body.light-theme .card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-theme="light"] .form-control,
+body.light-theme .form-control {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .form-control:focus,
+body.light-theme .form-control:focus {
+  border-color: #4f46e5 !important;
+}
+
+/* ==========================================================================
+   PRINT MEDIA STYLES - CLEAN TAX INVOICE & ESTIMATE PRINTOUT / PDF
+   ========================================================================== */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  :root {
+    --bg-surface: #ffffff !important;
+    --text-primary: #0f172a !important;
+    --text-secondary: #334155 !important;
+    --text-muted: #64748b !important;
+    --border-subtle: #e2e8f0 !important;
+    --border-medium: #cbd5e1 !important;
+    --primary-300: #2563eb !important;
+    --color-success: #059669 !important;
+    --color-danger: #dc2626 !important;
+  }
+  #app,
+  .app-sidebar,
+  .app-header,
+  .page-top-bar,
+  .toast-container,
+  .modal-header,
+  .modal-footer,
+  .modal-close-btn,
+  .btn,
+  button {
+    display: none !important;
+  }
+  .modal-overlay {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  .modal-container {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .modal-body {
+    padding: 0 !important;
+  }
+  #printable-tax-invoice,
+  #printable-estimate,
+  #printable-estimate-quotation,
+  #printable-payment-receipt,
+  .configured-print-doc,
+  .a4-container {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    padding: 10px 14px !important;
+    margin: 0 auto !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 840px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  #printable-tax-invoice *,
+  #printable-estimate *,
+  #printable-estimate-quotation *,
+  #printable-payment-receipt *,
+  .configured-print-doc *,
+  .a4-container * {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  #printable-tax-invoice th,
+  #printable-estimate th,
+  #printable-estimate-quotation th,
+  #printable-payment-receipt th,
+  .configured-print-doc th,
+  .a4-container th {
+    background-color: #f1f5f9 !important;
+    color: #334155 !important;
+    border-bottom: 1.5px solid #cbd5e1 !important;
+  }
+  @page {
+    size: auto;
+    margin: 8mm 10mm;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DOCUMENT PRINT FORMAT & PREVIEW CONTAINER ISOLATION
+   Ensures white A4 print documents and PDF exports always render high-contrast
+   dark text on white paper, completely immune to application dark theme variables.
+   -------------------------------------------------------------------------- */
+.a4-container,
+.configured-print-doc,
+#printable-estimate-quotation,
+#printable-tax-invoice,
+#printable-payment-receipt,
+#printable-estimate {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.a4-container table,
+.configured-print-doc table,
+#printable-estimate-quotation table,
+#printable-tax-invoice table,
+#printable-payment-receipt table,
+#printable-estimate table {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.a4-container table th,
+.a4-container thead th,
+.configured-print-doc table th,
+.configured-print-doc thead th,
+#printable-estimate-quotation table th,
+#printable-estimate-quotation thead th,
+#printable-tax-invoice table th,
+#printable-tax-invoice thead th,
+#printable-payment-receipt table th,
+#printable-payment-receipt thead th,
+#printable-estimate table th,
+#printable-estimate thead th {
+  background-color: #f1f5f9 !important;
+  color: #1e293b !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 6px 8px !important;
+}
+
+.a4-container table td,
+.a4-container tbody td,
+.configured-print-doc table td,
+.configured-print-doc tbody td,
+#printable-estimate-quotation table td,
+#printable-estimate-quotation tbody td,
+#printable-tax-invoice table td,
+#printable-tax-invoice tbody td,
+#printable-payment-receipt table td,
+#printable-payment-receipt tbody td,
+#printable-estimate table td,
+#printable-estimate tbody td {
+  color: #1e293b !important;
+  font-size: 11px !important;
+  padding: 5px 8px !important;
+}
+
+.a4-container table td *,
+.configured-print-doc table td *,
+#printable-estimate-quotation table td *,
+#printable-tax-invoice table td *,
+#printable-payment-receipt table td *,
+#printable-estimate table td * {
+  color: #1e293b !important;
+}
+

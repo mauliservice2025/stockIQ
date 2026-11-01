@@ -1,0 +1,30 @@
+    {
+      "id": "PERM-REG-CONFIG",
+      "module": "Organization & Facility Setup",
+      "name": "Registration Configuration Master",
+      "code": "CONFIG_REGISTRATION"
+    }
+  ],
+  "role_permissions": [
+    {
+      "role_id": "ROLE-ADMIN",
+      "perm_code": "CONFIG_REGISTRATION",
+      "view": true,
+      "add": true,
+      "edit": true,
+      "delete": true,
+      "submit": true,
+      "approve": true,
+      "reject": true,
+      "cancel": true,
+      "print": true,
+      "export": true,
+      "import": true,
+      "post": true,
+      "reverse": true,
+      "close": true,
+      "reopen": true
+    },
+    {
+      "role_id": "ROLE-ADMIN",
+      "perm_code": "FINANCIAL_CALENDAR_MASTER",
