@@ -12,7 +12,9 @@
     "cap:android": "cap open android",
     "cap:ios": "cap open ios",
     "build:mobile": "ng build && cap sync",
-    "api:sync": "node scripts/sync-api.js"
+    "api:sync": "node scripts/sync-api.js",
+    "android": "npx cap sync && npm run build && npx cap open android",
+    "ios": "npx cap sync && npm run build && npx cap open ios"
   },
   "private": true,
   "dependencies": {
