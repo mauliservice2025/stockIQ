@@ -5,3 +5,4 @@ export const healthRouter = Router();
 
 healthRouter.get('/health', getHealthStatus);
 healthRouter.get('/ready', getReadinessStatus);
+

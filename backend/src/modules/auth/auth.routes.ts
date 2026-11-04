@@ -6,3 +6,4 @@ import { LoginSchema } from './auth.schema.js';
 export const authRouter = Router();
 
 authRouter.post('/login', validate({ body: LoginSchema }), loginController);
+

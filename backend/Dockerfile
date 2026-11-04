@@ -19,3 +19,4 @@ COPY src/database/seeds ./src/database/seeds
 
 EXPOSE 3001
 CMD ["node", "dist/server.js"]
+

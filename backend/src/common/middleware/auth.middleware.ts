@@ -50,3 +50,4 @@ export function authorize(requiredPermission: string) {
     next();
   };
 }
+

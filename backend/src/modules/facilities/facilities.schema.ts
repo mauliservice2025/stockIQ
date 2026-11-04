@@ -10,3 +10,4 @@ export const FacilitySchema = z.object({
 });
 
 export type Facility = z.infer<typeof FacilitySchema>;
+

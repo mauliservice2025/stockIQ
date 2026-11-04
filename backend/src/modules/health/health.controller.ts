@@ -22,3 +22,4 @@ export async function getHealthStatus(req: Request, res: Response): Promise<void
 export function getReadinessStatus(req: Request, res: Response): void {
   res.status(200).json({ status: 'ready' });
 }
+

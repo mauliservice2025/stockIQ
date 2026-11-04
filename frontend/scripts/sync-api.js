@@ -14,3 +14,4 @@ if (fs.existsSync(openApiPath)) {
 } else {
   console.warn(`[API Sync] backend/openapi.json does not exist yet. Run 'npm run export:openapi' in backend first.`);
 }
+

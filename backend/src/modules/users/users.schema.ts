@@ -24,3 +24,4 @@ export const CreateUserSchema = z.object({
 
 export type UserItem = z.infer<typeof UserItemSchema>;
 export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+

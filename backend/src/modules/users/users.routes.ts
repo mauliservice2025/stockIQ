@@ -8,3 +8,4 @@ export const usersRouter = Router();
 
 usersRouter.get('/', authenticate, getUsersController);
 usersRouter.post('/', authenticate, authorize('USERS_MANAGE'), validate({ body: CreateUserSchema }), createUserController);
+

@@ -25,3 +25,4 @@ export async function createUserController(req: Request, res: Response, next: Ne
     next(error);
   }
 }
+

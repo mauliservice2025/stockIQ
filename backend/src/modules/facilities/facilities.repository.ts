@@ -38,3 +38,4 @@ export class FacilitiesRepository {
 }
 
 export const facilitiesRepository = new FacilitiesRepository();
+

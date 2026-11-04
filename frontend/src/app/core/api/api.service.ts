@@ -2,13 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse, AuthResponse, Facility, HealthStatus, LoginRequest, User } from './models';
+import { environment } from '@env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   private http = inject(HttpClient);
-  private baseUrl = '/api/v1';
+  private baseUrl = environment.apiBaseUrl;
 
   public getHealth(): Observable<HealthStatus> {
     return this.http.get<HealthStatus>(`${this.baseUrl}/health`);
@@ -30,3 +31,4 @@ export class ApiService {
     return this.http.post<ApiResponse<User>>(`${this.baseUrl}/users`, payload);
   }
 }
+

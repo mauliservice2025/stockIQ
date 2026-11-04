@@ -12,3 +12,4 @@ export async function getFacilitiesController(req: Request, res: Response, next:
     next(error);
   }
 }
+

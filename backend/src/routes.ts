@@ -10,3 +10,4 @@ apiRouter.use('/', healthRouter);
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/facilities', facilitiesRouter);
 apiRouter.use('/users', usersRouter);
+

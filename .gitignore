@@ -1,3 +1,7 @@
+# ==============================================================================
+# STOCKIQ ENTERPRISE - ROOT GITIGNORE
+# ==============================================================================
+
 # Dependencies
 node_modules/
 */node_modules/
@@ -5,34 +9,57 @@ frontend/node_modules/
 backend/node_modules/
 legacy/node_modules/
 
-# Build outputs
+# Build and Compilation Outputs
 dist/
 */dist/
 frontend/dist/
 backend/dist/
 .angular/
 frontend/.angular/
+*.tsbuildinfo
 
-# Environment files
+# Environment & Secret Files (Keep all .env files ignored except .env.example templates)
 .env
+.env.*
 *.env
-!.env.example
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+legacy/.env
+legacy/.env.*
 
-# Local SQLite / temporary db
+# Explicitly track environment example templates
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+!legacy/.env.example
+
+# Local SQLite / Temporary Database Artifacts
 *.db
+*.sqlite
+*.sqlite3
 database/
 
-
-# OS and IDE files
+# Operating System & IDE Files
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs & Debugging
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Capacitor native build folders (auto-generated)
+# Capacitor Native Build Output Folders (auto-generated)
 frontend/android/
 frontend/ios/
