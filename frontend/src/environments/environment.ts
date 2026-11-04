@@ -5,3 +5,4 @@ export const environment = {
   defaultFacilityId: 'PLANT-01',
   defaultTheme: 'dark' as const
 };
+

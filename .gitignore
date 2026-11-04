@@ -24,16 +24,19 @@ frontend/.angular/
 *.env
 backend/.env
 backend/.env.*
+backend/legacy/.env
+backend/legacy/.env.*
 frontend/.env
 frontend/.env.*
-legacy/.env
-legacy/.env.*
+frontend/legacy/.env
+frontend/legacy/.env.*
 
 # Explicitly track environment example templates
 !.env.example
 !backend/.env.example
+!backend/legacy/.env.example
 !frontend/.env.example
-!legacy/.env.example
+!frontend/legacy/.env.example
 
 # Local SQLite / Temporary Database Artifacts
 *.db
