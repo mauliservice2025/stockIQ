@@ -11,13 +11,45 @@ export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'purple' 
   template: `
     <span
       [ngClass]="[
-        'inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold tracking-wide border',
+        'inline-flex items-center px-2 py-0.5 rounded-xs text-status-badge border transition-colors select-none',
         variantClasses()
       ]"
     >
       <ng-content></ng-content>
     </span>
-  `
+  `,
+  styles: [`
+    .badge-success {
+      background-color: var(--color-success-bg);
+      color: var(--color-success);
+      border-color: var(--color-success-border);
+    }
+    .badge-warning {
+      background-color: var(--color-warning-bg);
+      color: var(--color-warning);
+      border-color: var(--color-warning-border);
+    }
+    .badge-danger {
+      background-color: var(--color-danger-bg);
+      color: var(--color-danger);
+      border-color: var(--color-danger-border);
+    }
+    .badge-info {
+      background-color: var(--color-info-bg);
+      color: var(--color-info);
+      border-color: var(--color-info-border);
+    }
+    .badge-purple {
+      background-color: var(--color-purple-bg);
+      color: var(--color-purple);
+      border-color: var(--color-purple-border);
+    }
+    .badge-neutral {
+      background-color: var(--hover-bg);
+      color: var(--text-secondary);
+      border-color: var(--border-subtle);
+    }
+  `]
 })
 export class UiBadgeComponent {
   public variant = input<BadgeVariant>('neutral');
@@ -25,18 +57,17 @@ export class UiBadgeComponent {
   protected variantClasses(): string {
     switch (this.variant()) {
       case 'success':
-        return 'bg-status-success/15 text-status-success border-status-success/30';
+        return 'badge-success';
       case 'warning':
-        return 'bg-status-warning/15 text-status-warning border-status-warning/30';
+        return 'badge-warning';
       case 'danger':
-        return 'bg-status-danger/15 text-status-danger border-status-danger/30';
+        return 'badge-danger';
       case 'info':
-        return 'bg-status-info/15 text-status-info border-status-info/30';
+        return 'badge-info';
       case 'purple':
-        return 'bg-status-purple/15 text-status-purple border-status-purple/30';
+        return 'badge-purple';
       default:
-        return 'bg-white/10 text-content-secondary border-white/15';
+        return 'badge-neutral';
     }
   }
 }
-

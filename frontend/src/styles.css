@@ -1,13 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 /* ==========================================================================
    ENTERPRISE ISCM DESIGN SYSTEM - DESIGN TOKENS & VARIABLES
-   Dark/Light Industrial Theme Tokens matching legacy css/variables.css
+   Strict compliance with docs/design-tokens.md (Zero Deviation)
    ========================================================================== */
 
 :root,
 [data-theme="dark"] {
+  /* 1.1 Brand & Accents */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-300: #a5b4fc;
+  --primary-400: #818cf8;
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5;
+  --primary-700: #4338ca;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+
+  /* 1.2 Surface & Backgrounds */
   --bg-app: #080c14;
   --bg-sidebar: #0b111e;
   --bg-header: rgba(11, 17, 30, 0.85);
@@ -24,28 +35,13 @@
   --modal-backdrop-blur: 6px;
   --bg-dropdown: rgba(17, 24, 39, 0.96);
 
-  --hover-bg: rgba(255, 255, 255, 0.05);
-  --hover-subtle: rgba(255, 255, 255, 0.03);
-
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.14);
-  --border-focus: #6366f1;
-  --border-accent: rgba(99, 102, 241, 0.4);
-
+  /* 1.3 Typography Colors */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   --text-inverse: #0f172a;
 
-  --primary-50: #eef2ff;
-  --primary-100: #e0e7ff;
-  --primary-300: #a5b4fc;
-  --primary-400: #818cf8;
-  --primary-500: #6366f1;
-  --primary-600: #4f46e5;
-  --primary-700: #4338ca;
-  --primary-glow: rgba(99, 102, 241, 0.35);
-
+  /* 1.4 Status & Functional Colors */
   --color-success: #10b981;
   --color-success-bg: rgba(16, 185, 129, 0.12);
   --color-success-border: rgba(16, 185, 129, 0.3);
@@ -66,18 +62,46 @@
   --color-purple-bg: rgba(168, 85, 247, 0.12);
   --color-purple-border: rgba(168, 85, 247, 0.3);
 
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-focus: #6366f1;
+  --border-accent: rgba(99, 102, 241, 0.4);
+
+  /* Hover Tints */
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --hover-subtle: rgba(255, 255, 255, 0.03);
+
+  /* Gradients */
   --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   --gradient-card: linear-gradient(145deg, rgba(22, 31, 51, 0.9) 0%, rgba(13, 19, 33, 0.95) 100%);
   --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 60%);
 
+  /* Section 4 Elevation & Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 25px var(--primary-glow);
+  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+
+  /* Scrollbars */
+  --scrollbar-track: rgba(11, 17, 30, 0.6);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(99, 102, 241, 0.5);
 }
 
 [data-theme="light"] {
+  /* 1.1 Brand & Accents */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-300: #4f46e5;
+  --primary-400: #6366f1;
+  --primary-500: #4f46e5;
+  --primary-600: #4338ca;
+  --primary-700: #3730a3;
+  --primary-glow: rgba(79, 70, 229, 0.2);
+
+  /* 1.2 Surface & Backgrounds */
   --bg-app: #f4f6fb;
   --bg-sidebar: #ffffff;
   --bg-header: rgba(255, 255, 255, 0.92);
@@ -94,28 +118,13 @@
   --modal-backdrop-blur: 5px;
   --bg-dropdown: #ffffff;
 
-  --hover-bg: rgba(0, 0, 0, 0.04);
-  --hover-subtle: rgba(0, 0, 0, 0.02);
-
-  --border-subtle: #e2e8f0;
-  --border-medium: #cbd5e1;
-  --border-focus: #4f46e5;
-  --border-accent: rgba(79, 70, 229, 0.3);
-
+  /* 1.3 Typography Colors */
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
   --text-inverse: #ffffff;
 
-  --primary-50: #eef2ff;
-  --primary-100: #e0e7ff;
-  --primary-300: #4f46e5;
-  --primary-400: #6366f1;
-  --primary-500: #4f46e5;
-  --primary-600: #4338ca;
-  --primary-700: #3730a3;
-  --primary-glow: rgba(79, 70, 229, 0.2);
-
+  /* 1.4 Status & Functional Colors */
   --color-success: #059669;
   --color-success-bg: rgba(5, 150, 105, 0.1);
   --color-success-border: rgba(5, 150, 105, 0.25);
@@ -136,35 +145,277 @@
   --color-purple-bg: rgba(124, 58, 237, 0.1);
   --color-purple-border: rgba(124, 58, 237, 0.25);
 
+  /* Borders & Dividers */
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-focus: #4f46e5;
+  --border-accent: rgba(79, 70, 229, 0.3);
+
+  /* Hover Tints */
+  --hover-bg: rgba(0, 0, 0, 0.04);
+  --hover-subtle: rgba(0, 0, 0, 0.02);
+
+  /* Gradients */
   --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
   --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
   --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 60%);
 
+  /* Section 4 Elevation & Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.09);
   --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.18);
+
+  /* Scrollbars */
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
 }
 
+/* System Theme Fallback */
+@media (prefers-color-scheme: light) {
+  [data-theme="system"] {
+    --bg-app: #f4f6fb;
+    --bg-sidebar: #ffffff;
+    --bg-header: rgba(255, 255, 255, 0.92);
+    --bg-card: #ffffff;
+    --bg-card-hover: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #f8fafc;
+    --bg-input: #ffffff;
+    --bg-toolbar: #f8fafc;
+    --bg-table-th: #f1f5f9;
+    --bg-modal: #ffffff;
+    --bg-modal-footer: #f8fafc;
+    --bg-modal-backdrop: rgba(15, 23, 42, 0.45);
+    --modal-backdrop-blur: 5px;
+    --bg-dropdown: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
+    --primary-50: #eef2ff;
+    --primary-100: #e0e7ff;
+    --primary-300: #4f46e5;
+    --primary-400: #6366f1;
+    --primary-500: #4f46e5;
+    --primary-600: #4338ca;
+    --primary-700: #3730a3;
+    --primary-glow: rgba(79, 70, 229, 0.2);
+    --border-subtle: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-focus: #4f46e5;
+    --border-accent: rgba(79, 70, 229, 0.3);
+    --hover-bg: rgba(0, 0, 0, 0.04);
+    --hover-subtle: rgba(0, 0, 0, 0.02);
+    --scrollbar-track: #f1f5f9;
+    --scrollbar-thumb: #cbd5e1;
+    --scrollbar-thumb-hover: #94a3b8;
+  }
+}
+
+/* Common Layout, Typography & Geometry Tokens (Independent of Theme) */
 :root {
+  /* Section 2 Typography Tokens */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
 
+  /* Section 3 Geometry & Layout Dimensions */
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 72px;
   --header-height: 70px;
   --ctrl-height: 34px;
+  --ctrl-height-sm: 30px;
+  --ctrl-height-xs: 26px;
   --btn-height: 32px;
+  --btn-height-sm: 28px;
+  --btn-icon-size: 28px;
+  --table-th-height: 38px;
+  --table-td-height: 42px;
+  --min-touch-target: 44px;
 
+  /* Section 4 Radii */
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-xl: 24px;
   --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ==========================================================================
+   SEMANTIC UTILITY CLASSES (docs/design-tokens.md Specification)
+   ========================================================================== */
+
+/* Typography Tokens (Section 2) */
+.text-page-title {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+}
+
+.text-section-title {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+}
+
+.text-menu-heading {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+.text-sidebar-item {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+}
+
+.text-sidebar-item-active {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+
+.text-form-label {
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+
+.text-input {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+}
+
+.text-table-header {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+.text-table-data {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.25 !important;
+}
+
+.text-status-badge {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  line-height: 1.1 !important;
+}
+
+.text-breadcrumb {
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+}
+
+.text-pagination {
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+
+/* Geometry & Layout Dimensions (Section 3) */
+.w-sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+}
+
+.w-sidebar-collapsed {
+  width: var(--sidebar-collapsed-width);
+  min-width: var(--sidebar-collapsed-width);
+}
+
+.h-header {
+  height: var(--header-height);
+}
+
+.h-ctrl {
+  height: var(--ctrl-height);
+}
+
+.h-ctrl-sm {
+  height: var(--ctrl-height-sm);
+}
+
+.h-ctrl-xs {
+  height: var(--ctrl-height-xs);
+}
+
+.h-btn {
+  height: var(--btn-height);
+}
+
+.h-btn-sm {
+  height: var(--btn-height-sm);
+}
+
+.size-btn-icon {
+  width: var(--btn-icon-size);
+  height: var(--btn-icon-size);
+}
+
+.table-header-row {
+  height: var(--table-th-height);
+}
+
+.table-data-row {
+  height: var(--table-td-height);
+}
+
+/* Semantic Form Control */
+.form-ctrl {
+  height: var(--ctrl-height);
+  font-size: 13px;
+  line-height: 1.2;
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 0 12px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-ctrl:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+
+/* Border semantic helpers */
+.border-subtle {
+  border-color: var(--border-subtle);
+}
+
+.border-medium {
+  border-color: var(--border-medium);
+}
+
+.border-focus {
+  border-color: var(--border-focus);
+}
+
+.border-accent {
+  border-color: var(--border-accent);
+}
+
+/* Background helpers */
+.bg-hover-bg {
+  background-color: var(--hover-bg);
+}
+
+/* Base Body Styles */
 body {
   margin: 0;
   padding: 0;
@@ -177,14 +428,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* High-Contrast Text Selection Highlighting */
+::selection {
+  background: rgba(99, 102, 241, 0.45) !important;
+  color: #ffffff !important;
+}
+
+::-moz-selection {
+  background: rgba(99, 102, 241, 0.45) !important;
+  color: #ffffff !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
 /* Touch Targets on Mobile (>= 44px) */
 @media (max-width: 768px) {
   button, select, input, a {
-    min-height: 44px;
+    min-height: var(--min-touch-target);
   }
 }
 
-/* Safe Area Boundary Bounds (Between Status Bar and Hardware Navigation Bar) */
+/* Safe Area Boundary Bounds */
 .app-viewport {
   min-height: 100dvh;
   padding-top: env(safe-area-inset-top, 0px);
@@ -199,4 +480,3 @@ body {
     min-height: -webkit-fill-available;
   }
 }
-

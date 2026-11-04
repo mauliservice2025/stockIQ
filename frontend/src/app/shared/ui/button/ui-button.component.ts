@@ -15,21 +15,77 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
       [disabled]="disabled() || loading()"
       (click)="clicked.emit($event)"
       [ngClass]="[
-        'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500/50 select-none',
+        'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-xs focus:outline-none focus:ring-2 focus:ring-brand-500/50 select-none cursor-pointer',
         sizeClasses(),
         variantClasses(),
-        disabled() || loading() ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'active:scale-95 cursor-pointer'
+        disabled() || loading() ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'active:scale-95'
       ]"
     >
       @if (loading()) {
-        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
+        <svg class="animate-spin -ml-1 mr-2 h-3.5 w-3.5 text-current" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
         </svg>
       }
       <ng-content></ng-content>
     </button>
-  `
+  `,
+  styles: [`
+    .btn-variant-primary {
+      background-color: var(--primary-500);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-variant-primary:hover {
+      background-color: var(--primary-600);
+      box-shadow: var(--shadow-glow);
+    }
+    .btn-variant-secondary {
+      background-color: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-variant-secondary:hover {
+      background-color: var(--hover-bg);
+      border-color: var(--border-medium);
+    }
+    .btn-variant-outline {
+      background-color: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-medium);
+    }
+    .btn-variant-outline:hover {
+      background-color: var(--hover-bg);
+    }
+    .btn-variant-danger {
+      background-color: var(--color-danger);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-variant-danger:hover {
+      opacity: 0.9;
+    }
+    .btn-variant-ghost {
+      background-color: transparent;
+      color: var(--text-secondary);
+    }
+    .btn-variant-ghost:hover {
+      color: var(--text-primary);
+      background-color: var(--hover-bg);
+    }
+    .btn-variant-icon {
+      width: var(--btn-icon-size);
+      height: var(--btn-icon-size);
+      padding: 0;
+      background-color: transparent;
+      color: var(--text-secondary);
+    }
+    .btn-variant-icon:hover {
+      color: var(--text-primary);
+      background-color: var(--hover-bg);
+    }
+  `]
 })
 export class UiButtonComponent {
   public variant = input<ButtonVariant>('primary');
@@ -41,28 +97,24 @@ export class UiButtonComponent {
   public clicked = output<MouseEvent>();
 
   protected sizeClasses(): string {
+    if (this.variant() === 'icon') {
+      return 'size-btn-icon';
+    }
     switch (this.size()) {
-      case 'sm': return 'h-7 px-2.5 text-xs';
-      case 'lg': return 'h-11 px-5 text-base';
-      default: return 'h-8 px-3.5 text-xs';
+      case 'sm': return 'h-[28px] px-2.5 text-xs';
+      case 'lg': return 'h-[38px] px-4 text-sm';
+      default: return 'h-[32px] px-3 text-xs';
     }
   }
 
   protected variantClasses(): string {
     switch (this.variant()) {
-      case 'secondary':
-        return 'bg-surface-elevated text-content-primary border border-white/10 hover:bg-white/10 shadow-sm';
-      case 'outline':
-        return 'bg-transparent text-content-primary border border-white/20 hover:bg-white/5';
-      case 'danger':
-        return 'bg-status-danger text-white hover:bg-red-600 shadow-sm';
-      case 'ghost':
-        return 'bg-transparent text-content-secondary hover:text-content-primary hover:bg-white/5';
-      case 'icon':
-        return 'h-7 w-7 p-0 bg-transparent text-content-secondary hover:text-content-primary hover:bg-white/10 rounded-md';
-      default:
-        return 'bg-brand-500 text-white hover:bg-brand-600 shadow-sm hover:shadow-glow';
+      case 'secondary': return 'btn-variant-secondary';
+      case 'outline': return 'btn-variant-outline';
+      case 'danger': return 'btn-variant-danger';
+      case 'ghost': return 'btn-variant-ghost';
+      case 'icon': return 'btn-variant-icon';
+      default: return 'btn-variant-primary';
     }
   }
 }
-

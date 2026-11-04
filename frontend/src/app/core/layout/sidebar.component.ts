@@ -21,13 +21,13 @@ interface NavSection {
   imports: [CommonModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <aside class="w-[280px] min-w-[280px] bg-surface-sidebar border-r border-white/10 flex flex-col h-[calc(100vh-70px)] sticky top-[70px] select-none">
+    <aside class="sidebar-container w-[280px] min-w-[280px] border-r flex flex-col h-[calc(100vh-70px)] sticky top-[70px] select-none">
       <div class="flex-1 overflow-y-auto px-3 py-4 space-y-3">
         @for (sec of navSections; track sec.id) {
           <div class="space-y-1">
             <!-- Section Header (Accordion trigger) -->
             <button
-              class="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-wider text-content-secondary hover:text-content-primary rounded transition-colors"
+              class="w-full flex items-center justify-between px-3 py-2 text-menu-heading uppercase tracking-wider text-content-secondary hover:text-content-primary rounded-xs transition-colors cursor-pointer"
               (click)="toggleSection(sec.id)"
             >
               <div class="flex items-center gap-2">
@@ -41,16 +41,17 @@ interface NavSection {
 
             <!-- Nav Items -->
             @if (isExpanded(sec.id)) {
-              <div class="pl-6 space-y-0.5 border-l border-white/10 ml-4 py-1">
+              <div class="pl-5 space-y-0.5 border-l border-border-subtle ml-4 py-1">
                 @for (item of sec.items; track item.route) {
                   <a
                     [routerLink]="item.route"
-                    routerLinkActive="bg-brand-500/15 text-brand-400 font-semibold border-l-2 border-brand-500"
-                    class="flex items-center justify-between px-2.5 py-1.5 text-xs text-content-secondary hover:text-content-primary hover:bg-white/5 rounded transition-colors"
+                    routerLinkActive="active-nav-link text-sidebar-item-active"
+                    [routerLinkActiveOptions]="{ exact: false }"
+                    class="flex items-center justify-between px-2.5 py-1.5 text-sidebar-item text-content-secondary hover:text-content-primary hover:bg-hover-bg rounded-xs transition-colors"
                   >
                     <span>{{ item.label }}</span>
                     @if (item.badge) {
-                      <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-brand-500/20 text-brand-400">
+                      <span class="text-status-badge font-mono px-1.5 py-0.2 rounded-xs badge-info">
                         {{ item.badge }}
                       </span>
                     }
@@ -63,11 +64,31 @@ interface NavSection {
       </div>
 
       <!-- Footer / Version -->
-      <div class="p-3 border-t border-white/10 text-center text-[10px] text-content-muted font-mono">
+      <div class="p-3 border-t border-border-subtle text-center text-[10.5px] text-content-muted font-mono">
         StockIQ Enterprise v2.0 · Angular + Tailwind
       </div>
     </aside>
-  `
+  `,
+  styles: [`
+    .sidebar-container {
+      background-color: var(--bg-sidebar);
+      border-color: var(--border-subtle);
+    }
+    .active-nav-link {
+      background-color: rgba(99, 102, 241, 0.12);
+      color: var(--primary-400);
+      border-left: 2px solid var(--primary-500);
+    }
+    [data-theme="light"] .active-nav-link {
+      color: var(--primary-600);
+      background-color: rgba(79, 70, 229, 0.08);
+    }
+    .badge-info {
+      background-color: var(--color-info-bg);
+      color: var(--color-info);
+      border: 1px solid var(--color-info-border);
+    }
+  `]
 })
 export class SidebarComponent {
   public expandedSections = signal<Set<string>>(new Set(['billing', 'overview', 'inventory']));
@@ -164,4 +185,3 @@ export class SidebarComponent {
     return this.expandedSections().has(id);
   }
 }
-

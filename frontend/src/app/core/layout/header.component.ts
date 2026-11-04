@@ -10,25 +10,25 @@ import { AuthService } from '../auth/auth.service';
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <header class="h-[70px] bg-surface-header backdrop-blur-md border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-30 select-none">
+    <header class="header-container h-[70px] backdrop-blur-md border-b px-6 flex items-center justify-between sticky top-0 z-30 select-none">
       <!-- Left: Brand / Facility -->
       <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-600 to-brand-400 flex items-center justify-center text-white font-bold text-sm shadow-md">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-md bg-gradient-to-br from-brand-600 to-brand-400 flex items-center justify-center text-white font-bold text-sm shadow-md">
             SIQ
           </div>
           <div class="hidden sm:block">
             <h1 class="text-sm font-bold text-content-primary leading-tight">StockIQ Enterprise</h1>
-            <span class="text-[10px] text-content-secondary font-mono tracking-wider uppercase">AutoGarage & SCM v2.0</span>
+            <span class="text-[10.5px] text-brand-400 font-mono tracking-wider uppercase">AutoGarage & SCM v2.0</span>
           </div>
         </div>
 
-        <div class="h-5 w-px bg-white/10 mx-1 hidden sm:block"></div>
+        <div class="h-5 w-px bg-border-subtle mx-1 hidden sm:block"></div>
 
         <!-- Facility Switcher -->
         <div class="relative">
           <select
-            class="bg-surface-elevated text-content-primary text-xs font-semibold py-1.5 px-3 pr-8 rounded border border-white/10 focus:outline-none focus:border-brand-500 cursor-pointer appearance-none"
+            class="h-ctrl bg-surface-elevated text-content-primary text-input font-medium px-3 pr-8 rounded-xs border border-border-subtle focus:outline-none focus:border-brand-500 cursor-pointer appearance-none transition-colors"
             [value]="facilityService.currentFacility().id"
             (change)="onFacilityChange($event)"
           >
@@ -43,13 +43,13 @@ import { AuthService } from '../auth/auth.service';
       </div>
 
       <!-- Center: Global Quick Search -->
-      <div class="hidden md:flex items-center relative w-72">
+      <div class="hidden md:flex items-center relative w-80">
         <input
           type="text"
           placeholder="Quick search job cards, parts, orders... (Ctrl+K)"
-          class="w-full bg-surface-input text-content-primary placeholder-content-muted text-xs rounded-md pl-8 pr-3 py-1.5 border border-white/10 focus:outline-none focus:border-brand-500 transition-colors"
+          class="w-full h-ctrl bg-surface-input text-content-primary placeholder:text-content-muted text-input rounded-xs pl-8 pr-3 border border-border-subtle focus:outline-none focus:border-brand-500 transition-colors"
         />
-        <svg class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-content-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-content-muted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
       </div>
@@ -58,7 +58,7 @@ import { AuthService } from '../auth/auth.service';
       <div class="flex items-center gap-3">
         <!-- Theme Toggle -->
         <button
-          class="p-2 rounded-md text-content-secondary hover:text-content-primary hover:bg-white/10 transition-colors cursor-pointer"
+          class="size-btn-icon rounded-xs flex items-center justify-center text-content-secondary hover:text-content-primary hover:bg-hover-bg transition-colors cursor-pointer border border-border-subtle"
           (click)="themeService.toggleTheme()"
           [title]="'Current Theme: ' + themeService.currentTheme()"
         >
@@ -70,7 +70,7 @@ import { AuthService } from '../auth/auth.service';
         </button>
 
         <!-- User Profile Pill -->
-        <div class="flex items-center gap-2.5 pl-2 border-l border-white/10">
+        <div class="flex items-center gap-2.5 pl-2 border-l border-border-subtle">
           <div class="w-7 h-7 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xs uppercase shadow-sm">
             {{ userInitial() }}
           </div>
@@ -81,7 +81,13 @@ import { AuthService } from '../auth/auth.service';
         </div>
       </div>
     </header>
-  `
+  `,
+  styles: [`
+    .header-container {
+      background-color: var(--bg-header);
+      border-color: var(--border-subtle);
+    }
+  `]
 })
 export class HeaderComponent {
   public themeService = inject(ThemeService);
@@ -98,4 +104,3 @@ export class HeaderComponent {
     return name.charAt(0);
   }
 }
-

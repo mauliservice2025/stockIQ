@@ -15,12 +15,12 @@ import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <div class="text-xs text-content-secondary flex items-center gap-1.5 mb-1">
+          <div class="text-breadcrumb text-content-secondary flex items-center gap-1.5 mb-1">
             <span>Overview</span>
             <span>/</span>
             <span class="text-brand-400 font-medium">Operations Dashboard</span>
           </div>
-          <h2 class="text-xl font-bold tracking-tight text-content-primary">Executive Operations Dashboard</h2>
+          <h2 class="text-page-title text-content-primary tracking-tight">Executive Operations Dashboard</h2>
         </div>
         <div class="flex items-center gap-2">
           <ui-button variant="outline" size="sm">
@@ -74,61 +74,67 @@ import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
         <div class="lg:col-span-2">
           <ui-card title="Recent Workshop Job Cards">
             <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs">
+              <table class="w-full text-left">
                 <thead>
-                  <tr class="border-b border-white/10 text-content-secondary uppercase text-[11px] font-semibold">
-                    <th class="py-2.5 px-3">Job Card #</th>
-                    <th class="py-2.5 px-3">Vehicle / Model</th>
-                    <th class="py-2.5 px-3">Customer</th>
-                    <th class="py-2.5 px-3">Status</th>
-                    <th class="py-2.5 px-3 text-right">Est. Amount</th>
+                  <tr class="table-header-row border-b border-border-subtle text-content-secondary uppercase text-table-header bg-surface-table-th">
+                    <th class="py-2 px-3 font-semibold">Job Card #</th>
+                    <th class="py-2 px-3 font-semibold">Vehicle / Model</th>
+                    <th class="py-2 px-3 font-semibold">Customer</th>
+                    <th class="py-2 px-3 font-semibold">Status</th>
+                    <th class="py-2 px-3 font-semibold text-right">Est. Amount</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-white/5">
-                  <tr class="hover:bg-white/5 transition-colors">
-                    <td class="py-3 px-3 font-mono font-semibold text-brand-400">JC-2026-0042</td>
-                    <td class="py-3 px-3">
+                <tbody class="divide-y divide-border-subtle">
+                  <tr class="table-data-row text-table-data hover:bg-hover-bg transition-colors">
+                    <td class="py-2.5 px-3 font-mono font-semibold text-brand-400">JC-2026-0042</td>
+                    <td class="py-2.5 px-3">
                       <div class="font-medium text-content-primary">MH 12 AB 1234</div>
                       <div class="text-[11px] text-content-muted">Honda Activa 6G (DLX)</div>
                     </td>
-                    <td class="py-3 px-3">
-                      <div>Rahul Sharma</div>
+                    <td class="py-2.5 px-3">
+                      <div class="text-content-primary font-medium">Rahul Sharma</div>
                       <div class="text-[11px] text-content-muted">9822012345</div>
                     </td>
-                    <td class="py-3 px-3">
+                    <td class="py-2.5 px-3">
                       <ui-badge variant="info">IN PROGRESS</ui-badge>
                     </td>
-                    <td class="py-3 px-3 text-right font-mono font-medium">₹2,450</td>
+                    <td class="py-2.5 px-3 text-right font-mono font-semibold text-content-primary">
+                      ₹4,850.00
+                    </td>
                   </tr>
-                  <tr class="hover:bg-white/5 transition-colors">
-                    <td class="py-3 px-3 font-mono font-semibold text-brand-400">JC-2026-0041</td>
-                    <td class="py-3 px-3">
-                      <div class="font-medium text-content-primary">MH 14 CD 5678</div>
+                  <tr class="table-data-row text-table-data hover:bg-hover-bg transition-colors">
+                    <td class="py-2.5 px-3 font-mono font-semibold text-brand-400">JC-2026-0041</td>
+                    <td class="py-2.5 px-3">
+                      <div class="font-medium text-content-primary">MH 14 DF 5678</div>
                       <div class="text-[11px] text-content-muted">Bajaj Pulsar 150 Twin Disc</div>
                     </td>
-                    <td class="py-3 px-3">
-                      <div>Amit Kulkarni</div>
-                      <div class="text-[11px] text-content-muted">9822054321</div>
+                    <td class="py-2.5 px-3">
+                      <div class="text-content-primary font-medium">Amit Kulkarni</div>
+                      <div class="text-[11px] text-content-muted">9423019876</div>
                     </td>
-                    <td class="py-3 px-3">
+                    <td class="py-2.5 px-3">
                       <ui-badge variant="warning">ESTIMATED</ui-badge>
                     </td>
-                    <td class="py-3 px-3 text-right font-mono font-medium">₹5,120</td>
+                    <td class="py-2.5 px-3 text-right font-mono font-semibold text-content-primary">
+                      ₹3,200.00
+                    </td>
                   </tr>
-                  <tr class="hover:bg-white/5 transition-colors">
-                    <td class="py-3 px-3 font-mono font-semibold text-brand-400">JC-2026-0040</td>
-                    <td class="py-3 px-3">
-                      <div class="font-medium text-content-primary">MH 12 EF 9012</div>
+                  <tr class="table-data-row text-table-data hover:bg-hover-bg transition-colors">
+                    <td class="py-2.5 px-3 font-mono font-semibold text-brand-400">JC-2026-0040</td>
+                    <td class="py-2.5 px-3">
+                      <div class="font-medium text-content-primary">MH 12 XY 9012</div>
                       <div class="text-[11px] text-content-muted">TVS Jupiter ZX Disc</div>
                     </td>
-                    <td class="py-3 px-3">
-                      <div>Sunil Shinde</div>
-                      <div class="text-[11px] text-content-muted">9822098765</div>
+                    <td class="py-2.5 px-3">
+                      <div class="text-content-primary font-medium">Pooja Patil</div>
+                      <div class="text-[11px] text-content-muted">9158012344</div>
                     </td>
-                    <td class="py-3 px-3">
-                      <ui-badge variant="success">COMPLETED</ui-badge>
+                    <td class="py-2.5 px-3">
+                      <ui-badge variant="success">READY / DELIVERED</ui-badge>
                     </td>
-                    <td class="py-3 px-3 text-right font-mono font-medium">₹1,850</td>
+                    <td class="py-2.5 px-3 text-right font-mono font-semibold text-content-primary">
+                      ₹2,150.00
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -136,46 +142,43 @@ import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
           </ui-card>
         </div>
 
-        <!-- Quick Metrics / Stock Breakdown -->
-        <div>
-          <ui-card title="Warehouse Stock Health">
-            <div class="space-y-4">
-              <div>
-                <div class="flex justify-between text-xs mb-1">
-                  <span class="text-content-secondary">Spare Parts Availability</span>
-                  <span class="font-semibold text-content-primary">92%</span>
-                </div>
-                <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                  <div class="bg-brand-500 h-2 rounded-full" style="width: 92%"></div>
-                </div>
+        <!-- System Quick Actions & Facility Stats -->
+        <div class="space-y-6">
+          <ui-card title="Facility Status · PLANT-01">
+            <div class="space-y-3 text-table-data">
+              <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
+                <span class="text-content-secondary">PostgreSQL Replication</span>
+                <ui-badge variant="success">SYNCHRONIZED</ui-badge>
               </div>
+              <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
+                <span class="text-content-secondary">Workshop Capacity</span>
+                <span class="font-mono font-bold text-content-primary">84% (21/25 Bays)</span>
+              </div>
+              <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
+                <span class="text-content-secondary">Technicians on Floor</span>
+                <span class="font-mono font-bold text-content-primary">12 Active</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-content-secondary">Audit Trail Status</span>
+                <span class="text-brand-400 font-mono text-xs">Immutable On</span>
+              </div>
+            </div>
+          </ui-card>
 
-              <div>
-                <div class="flex justify-between text-xs mb-1">
-                  <span class="text-content-secondary">Fast Moving Consumables</span>
-                  <span class="font-semibold text-content-primary">78%</span>
-                </div>
-                <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                  <div class="bg-status-success h-2 rounded-full" style="width: 78%"></div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-xs mb-1">
-                  <span class="text-content-secondary">Bin Capacity Utilization</span>
-                  <span class="font-semibold text-content-primary">64%</span>
-                </div>
-                <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                  <div class="bg-status-info h-2 rounded-full" style="width: 64%"></div>
-                </div>
-              </div>
-
-              <div class="p-3 bg-surface-elevated rounded border border-white/5 mt-4">
-                <div class="text-xs font-semibold text-content-primary mb-1">Active Facility Context</div>
-                <div class="text-[11px] text-content-secondary leading-relaxed">
-                  PostgreSQL 17 live connection active. Real-time synchronizations enabled across Pune Central & Chakan units.
-                </div>
-              </div>
+          <ui-card title="Quick Operations">
+            <div class="grid grid-cols-2 gap-2">
+              <ui-button variant="secondary" size="sm" class="w-full">
+                <span>⚡ Quick Bill</span>
+              </ui-button>
+              <ui-button variant="secondary" size="sm" class="w-full">
+                <span>🔄 Putaway Bin</span>
+              </ui-button>
+              <ui-button variant="secondary" size="sm" class="w-full">
+                <span>📋 Gate Pass</span>
+              </ui-button>
+              <ui-button variant="secondary" size="sm" class="w-full">
+                <span>🔍 Part Lookup</span>
+              </ui-button>
             </div>
           </ui-card>
         </div>
@@ -184,4 +187,3 @@ import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
   `
 })
 export class DashboardComponent {}
-

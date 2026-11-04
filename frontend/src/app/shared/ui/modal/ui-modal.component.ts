@@ -9,28 +9,28 @@ import { CommonModule } from '@angular/common';
   template: `
     @if (isOpen()) {
       <div
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-surface-backdrop backdrop-blur-sm animate-fade-in"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop backdrop-blur-sm animate-fade-in"
         (click)="onBackdropClick($event)"
       >
         <div
           [ngClass]="[
-            'bg-surface-modal border border-white/10 rounded-lg shadow-modal flex flex-col overflow-hidden transition-all duration-200',
+            'modal-dialog border rounded-lg shadow-modal flex flex-col overflow-hidden transition-all duration-200',
             isFullscreen() ? 'w-full h-full rounded-none' : maxWidthClasses()
           ]"
         >
           <!-- Modal Header -->
-          <div class="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-surface-default">
-            <h3 class="text-sm font-semibold text-content-primary">{{ title() }}</h3>
-            <div class="flex items-center gap-2">
+          <div class="flex items-center justify-between px-5 py-3.5 border-b border-border-subtle bg-surface-default">
+            <h3 class="text-section-title text-content-primary">{{ title() }}</h3>
+            <div class="flex items-center gap-1.5">
               <button
-                class="p-1 rounded text-content-secondary hover:text-content-primary hover:bg-white/10 transition-colors"
+                class="size-btn-icon rounded-xs flex items-center justify-center text-content-secondary hover:text-content-primary hover:bg-hover-bg transition-colors cursor-pointer"
                 (click)="toggleFullscreen()"
                 title="Toggle Fullscreen"
               >
                 🗖
               </button>
               <button
-                class="p-1 rounded text-content-secondary hover:text-content-primary hover:bg-white/10 transition-colors"
+                class="size-btn-icon rounded-xs flex items-center justify-center text-content-secondary hover:text-content-primary hover:bg-hover-bg transition-colors cursor-pointer"
                 (click)="close.emit()"
                 title="Close (Esc)"
               >
@@ -40,18 +40,30 @@ import { CommonModule } from '@angular/common';
           </div>
 
           <!-- Modal Body -->
-          <div class="p-5 overflow-y-auto flex-1">
+          <div class="p-5 overflow-y-auto flex-1 text-table-data text-content-primary">
             <ng-content></ng-content>
           </div>
 
           <!-- Modal Footer -->
-          <div class="flex items-center justify-end gap-2 px-5 py-3 border-t border-white/10 bg-surface-default/50">
+          <div class="flex items-center justify-end gap-2 px-5 py-3 border-t border-border-subtle modal-footer">
             <ng-content select="[modal-footer]"></ng-content>
           </div>
         </div>
       </div>
     }
-  `
+  `,
+  styles: [`
+    .modal-backdrop {
+      background-color: var(--bg-modal-backdrop);
+    }
+    .modal-dialog {
+      background-color: var(--bg-modal);
+      border-color: var(--border-medium);
+    }
+    .modal-footer {
+      background-color: var(--bg-modal-footer);
+    }
+  `]
 })
 export class UiModalComponent {
   public isOpen = input<boolean>(false);
@@ -81,4 +93,3 @@ export class UiModalComponent {
     }
   }
 }
-
