@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ==========================================================================
+   ENTERPRISE ISCM DESIGN SYSTEM - DESIGN TOKENS & VARIABLES
+   Dark/Light Industrial Theme Tokens matching legacy css/variables.css
+   ========================================================================== */
+
+:root,
+[data-theme="dark"] {
+  --bg-app: #080c14;
+  --bg-sidebar: #0b111e;
+  --bg-header: rgba(11, 17, 30, 0.85);
+  --bg-card: rgba(17, 24, 39, 0.85);
+  --bg-card-hover: rgba(26, 36, 56, 0.95);
+  --bg-surface: #131b2e;
+  --bg-surface-elevated: #1a243b;
+  --bg-input: #0e1626;
+  --bg-toolbar: rgba(11, 17, 30, 0.45);
+  --bg-table-th: rgba(14, 21, 37, 0.9);
+  --bg-modal: #0f172a;
+  --bg-modal-footer: rgba(8, 12, 20, 0.6);
+  --bg-modal-backdrop: rgba(2, 6, 23, 0.72);
+  --modal-backdrop-blur: 6px;
+  --bg-dropdown: rgba(17, 24, 39, 0.96);
+
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --hover-subtle: rgba(255, 255, 255, 0.03);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-focus: #6366f1;
+  --border-accent: rgba(99, 102, 241, 0.4);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0f172a;
+
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-300: #a5b4fc;
+  --primary-400: #818cf8;
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5;
+  --primary-700: #4338ca;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+
+  --color-success: #10b981;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-success-border: rgba(16, 185, 129, 0.3);
+
+  --color-warning: #f59e0b;
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-warning-border: rgba(245, 158, 11, 0.3);
+
+  --color-danger: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.12);
+  --color-danger-border: rgba(239, 68, 68, 0.3);
+
+  --color-info: #06b6d4;
+  --color-info-bg: rgba(6, 182, 212, 0.12);
+  --color-info-border: rgba(6, 182, 212, 0.3);
+
+  --color-purple: #a855f7;
+  --color-purple-bg: rgba(168, 85, 247, 0.12);
+  --color-purple-border: rgba(168, 85, 247, 0.3);
+
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --gradient-card: linear-gradient(145deg, rgba(22, 31, 51, 0.9) 0%, rgba(13, 19, 33, 0.95) 100%);
+  --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 60%);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px var(--primary-glow);
+}
+
+[data-theme="light"] {
+  --bg-app: #f4f6fb;
+  --bg-sidebar: #ffffff;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8fafc;
+  --bg-input: #ffffff;
+  --bg-toolbar: #f8fafc;
+  --bg-table-th: #f1f5f9;
+  --bg-modal: #ffffff;
+  --bg-modal-footer: #f8fafc;
+  --bg-modal-backdrop: rgba(15, 23, 42, 0.45);
+  --modal-backdrop-blur: 5px;
+  --bg-dropdown: #ffffff;
+
+  --hover-bg: rgba(0, 0, 0, 0.04);
+  --hover-subtle: rgba(0, 0, 0, 0.02);
+
+  --border-subtle: #e2e8f0;
+  --border-medium: #cbd5e1;
+  --border-focus: #4f46e5;
+  --border-accent: rgba(79, 70, 229, 0.3);
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-300: #4f46e5;
+  --primary-400: #6366f1;
+  --primary-500: #4f46e5;
+  --primary-600: #4338ca;
+  --primary-700: #3730a3;
+  --primary-glow: rgba(79, 70, 229, 0.2);
+
+  --color-success: #059669;
+  --color-success-bg: rgba(5, 150, 105, 0.1);
+  --color-success-border: rgba(5, 150, 105, 0.25);
+
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.1);
+  --color-warning-border: rgba(217, 119, 6, 0.25);
+
+  --color-danger: #dc2626;
+  --color-danger-bg: rgba(220, 38, 38, 0.1);
+  --color-danger-border: rgba(220, 38, 38, 0.25);
+
+  --color-info: #0284c7;
+  --color-info-bg: rgba(2, 132, 199, 0.1);
+  --color-info-border: rgba(2, 132, 199, 0.25);
+
+  --color-purple: #7c3aed;
+  --color-purple-bg: rgba(124, 58, 237, 0.1);
+  --color-purple-border: rgba(124, 58, 237, 0.25);
+
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --gradient-glow: radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 60%);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.09);
+  --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.18);
+}
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 70px;
+  --ctrl-height: 34px;
+  --btn-height: 32px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch Targets on Mobile (>= 44px) */
+@media (max-width: 768px) {
+  button, select, input, a {
+    min-height: 44px;
+  }
+}
+
+/* Safe Area Boundary Bounds (Between Status Bar and Hardware Navigation Bar) */
+.app-viewport {
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  box-sizing: border-box;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .app-viewport {
+    min-height: -webkit-fill-available;
+  }
+}
+
